@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TECH 500 2026 — France's Fastest-Growing Tech Companies</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg-primary: #0a0f1a;
+            --bg-secondary: #111827;
+            --bg-card: rgba(255,255,255,0.04);
+            --bg-card-hover: rgba(255,255,255,0.07);
+            --border-subtle: rgba(255,255,255,0.08);
+            --border-hover: rgba(255,255,255,0.15);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-blue: #3b82f6;
+            --accent-violet: #8b5cf6;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, #0f172a 50%, #1e1b4b 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        .bg-effects {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+        .bg-effects::before {
+            content: '';
+            position: absolute;
+            top: -10%;
+            right: -5%;
+            width: 40%;
+            height: 40%;
+            background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%);
+            filter: blur(60px);
+        }
+        .bg-effects::after {
+            content: '';
+            position: absolute;
+            bottom: 10%;
+            left: -10%;
+            width: 35%;
+            height: 35%;
+            background: radial-gradient(circle, rgba(139,92,246,0.1) 0%, transparent 70%);
+            filter: blur(60px);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(10,15,26,0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 1.25rem 0;
+        }
+        .header-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            box-shadow: 0 4px 15px rgba(139,92,246,0.3);
+        }
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+        .brand-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .brand-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #fff, #c7d2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header-stats {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .stat-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.75rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+        .stat-badge.highlight {
+            background: rgba(59,130,246,0.1);
+            border-color: rgba(59,130,246,0.3);
+            color: #93c5fd;
+        }
+        .filters-section {
+            padding: 1.5rem 0 1rem;
+        }
+        .search-row {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        .search-wrapper {
+            flex: 1;
+            min-width: 220px;
+            position: relative;
+        }
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+        .search-input {
+            width: 100%;
+            padding: 0.875rem 2.75rem 0.875rem 2.75rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        .search-input::placeholder { color: var(--text-muted); }
+        .search-input:focus {
+            outline: none;
+            border-color: rgba(59,130,246,0.5);
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+        }
+        .clear-btn {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 4px;
+            display: none;
+        }
+        .clear-btn.visible { display: block; }
+        .clear-btn:hover { color: var(--text-primary); background: rgba(255,255,255,0.1); }
+        .filter-select {
+            padding: 0.875rem 2.5rem 0.875rem 1rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            font-family: inherit;
+            cursor: pointer;
+            min-width: 180px;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2364748b' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+        }
+        .filter-select:focus {
+            outline: none;
+            border-color: rgba(59,130,246,0.5);
+        }
+        .filter-select option { background: #1e293b; }
+        .sort-controls {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .sort-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-right: 0.25rem;
+        }
+        .sort-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.85rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        .sort-btn:hover { background: rgba(255,255,255,0.08); }
+        .sort-btn.active {
+            background: rgba(59,130,246,0.15);
+            border-color: rgba(59,130,246,0.4);
+            color: #93c5fd;
+        }
+        .sort-btn .arrow {
+            font-size: 0.65rem;
+            opacity: 0.6;
+        }
+        .sort-btn.active .arrow { opacity: 1; }
+        .sector-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .sector-pill {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.4rem 0.75rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .sector-pill:hover { background: rgba(255,255,255,0.08); }
+        .sector-pill.active {
+            background: rgba(59,130,246,0.15);
+            border-color: rgba(59,130,246,0.4);
+            color: #93c5fd;
+        }
+        .results-info {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .results-info strong { color: var(--text-primary); }
+        .results-info .hl { color: var(--accent-blue); }
+
+        /* Table */
+        .table-wrapper {
+            overflow-x: auto;
+            margin-top: 0.5rem;
+            padding-bottom: 1rem;
+            -webkit-overflow-scrolling: touch;
+        }
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 0.82rem;
+        }
+        thead th {
+            position: sticky;
+            top: 0;
+            background: rgba(17,24,39,0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 0.75rem;
+            text-align: left;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--border-subtle);
+            white-space: nowrap;
+            z-index: 10;
+        }
+        thead th.sortable {
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.2s;
+        }
+        thead th.sortable:hover { color: var(--text-secondary); }
+        thead th.sorted { color: #93c5fd; }
+        thead th .th-content {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+        thead th .sort-arrow {
+            font-size: 0.6rem;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        thead th.sortable:hover .sort-arrow { opacity: 0.5; }
+        thead th.sorted .sort-arrow { opacity: 1; }
+        tbody tr { transition: background 0.15s; }
+        tbody tr:hover { background: var(--bg-card-hover); }
+        tbody td {
+            padding: 0.7rem 0.75rem;
+            border-bottom: 1px solid var(--border-subtle);
+            vertical-align: middle;
+        }
+        .col-rank {
+            width: 50px;
+            text-align: center;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.75rem;
+        }
+        .col-company { min-width: 160px; }
+        .company-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            display: block;
+        }
+        .company-desc {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            display: block;
+            max-width: 280px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .company-link {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+        .company-link:hover { color: #93c5fd; }
+        .col-sector { min-width: 120px; }
+        .sector-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.3rem 0.55rem;
+            border-radius: 6px;
+            font-size: 0.65rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .col-hq {
+            min-width: 100px;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+        }
+        .col-employees {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+        }
+        .emp-current { font-weight: 600; color: var(--text-primary); }
+        .emp-prev { font-size: 0.7rem; color: var(--text-muted); }
+        .col-growth {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+            min-width: 90px;
+        }
+        .growth-value { font-weight: 700; font-size: 0.9rem; }
+        .growth-bar {
+            height: 3px;
+            border-radius: 2px;
+            margin-top: 3px;
+            background: rgba(255,255,255,0.06);
+            overflow: hidden;
+        }
+        .growth-bar-fill {
+            height: 100%;
+            border-radius: 2px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-violet));
+            transition: width 0.3s ease;
+        }
+        .col-hires {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .hires-value { color: #6ee7b7; }
+        .col-website { min-width: 60px; text-align: center; }
+        .website-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 6px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .website-link:hover {
+            background: rgba(59,130,246,0.2);
+            color: #93c5fd;
+        }
+        .growth-high { color: #4ade80; }
+        .growth-med { color: #facc15; }
+        .growth-low { color: var(--text-secondary); }
+
+        .sector-btob { background: rgba(99,102,241,0.15); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.3); }
+        .sector-deeptech { background: rgba(139,92,246,0.15); color: #c4b5fd; border: 1px solid rgba(139,92,246,0.3); }
+        .sector-distribution { background: rgba(245,158,11,0.15); color: #fcd34d; border: 1px solid rgba(245,158,11,0.3); }
+        .sector-entertainment { background: rgba(236,72,153,0.15); color: #f9a8d4; border: 1px solid rgba(236,72,153,0.3); }
+        .sector-fintech { background: rgba(234,179,8,0.15); color: #fde047; border: 1px solid rgba(234,179,8,0.3); }
+        .sector-healthtech { background: rgba(16,185,129,0.15); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.3); }
+        .sector-impact { background: rgba(132,204,22,0.15); color: #bef264; border: 1px solid rgba(132,204,22,0.3); }
+        .sector-industry { background: rgba(249,115,22,0.15); color: #fdba74; border: 1px solid rgba(249,115,22,0.3); }
+        .sector-martech { background: rgba(217,70,239,0.15); color: #e879f9; border: 1px solid rgba(217,70,239,0.3); }
+
+        .dot-btob { background: #a5b4fc; }
+        .dot-deeptech { background: #c4b5fd; }
+        .dot-distribution { background: #fcd34d; }
+        .dot-entertainment { background: #f9a8d4; }
+        .dot-fintech { background: #fde047; }
+        .dot-healthtech { background: #6ee7b7; }
+        .dot-impact { background: #bef264; }
+        .dot-industry { background: #fdba74; }
+        .dot-martech { background: #e879f9; }
+
+        .sector-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .empty-state { text-align: center; padding: 4rem 2rem; }
+        .empty-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+        }
+        .empty-title { font-size: 1.1rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.25rem; }
+        .empty-text { font-size: 0.85rem; color: var(--text-muted); }
+
+        footer {
+            border-top: 1px solid var(--border-subtle);
+            padding: 1.5rem 0;
+            text-align: center;
+            background: rgba(0,0,0,0.2);
+        }
+        .footer-text { font-size: 0.7rem; color: var(--text-muted); }
+        .footer-link { color: rgba(59,130,246,0.7); text-decoration: none; }
+        .footer-link:hover { color: var(--accent-blue); }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        .page-btn {
+            padding: 0.5rem 0.85rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        .page-btn:hover:not(:disabled) { background: rgba(255,255,255,0.08); color: var(--text-primary); }
+        .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .page-btn.active {
+            background: rgba(59,130,246,0.15);
+            border-color: rgba(59,130,246,0.4);
+            color: #93c5fd;
+        }
+        .page-info { font-size: 0.75rem; color: var(--text-muted); padding: 0 0.5rem; }
+        .per-page-select {
+            padding: 0.5rem 2rem 0.5rem 0.75rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-family: inherit;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2364748b' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.5rem center;
+        }
+        .per-page-select option { background: #1e293b; }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 40px;
+            height: 40px;
+            background: rgba(59,130,246,0.2);
+            border: 1px solid rgba(59,130,246,0.4);
+            border-radius: 10px;
+            color: #93c5fd;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            transition: all 0.2s;
+            font-size: 1rem;
+        }
+        .scroll-top:hover { background: rgba(59,130,246,0.3); }
+        .scroll-top.visible { display: flex; }
+
+        @media (max-width: 768px) {
+            .header-content { flex-direction: column; align-items: flex-start; }
+            .search-row { flex-direction: column; }
+            .filter-select { min-width: 100%; }
+            thead th, tbody td { padding: 0.5rem 0.4rem; font-size: 0.72rem; }
+            .company-desc { max-width: 160px; }
+            .brand-title { font-size: 1.1rem; }
+            .col-hq { display: none; }
+        }
+        @media (max-width: 480px) {
+            .col-employees { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-effects"></div>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="brand">
+                    <div class="brand-icon">
+                        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                    </div>
+                    <div class="brand-text">
+                        <span class="brand-label">French Tech Ranking</span>
+                        <span class="brand-title">TECH 500 &mdash; 2026</span>
+                    </div>
+                </div>
+                <div class="header-stats">
+                    <div class="stat-badge highlight">
+                        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        500 Companies
+                    </div>
+                    <div class="stat-badge">
+                        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        11,651 New Hires
+                    </div>
+                    <div class="stat-badge">
+                        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                        33% Avg Growth
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="filters-section">
+                <div class="search-row">
+                    <div class="search-wrapper">
+                        <svg class="search-icon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/></svg>
+                        <input type="text" class="search-input" id="searchInput" placeholder="Search companies, descriptions...">
+                        <button class="clear-btn" id="clearBtn" onclick="clearSearch()">
+                            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                    </div>
+                    <select class="filter-select" id="sectorFilter" onchange="applyFilters()">
+                        <option value="">All Sectors</option>
+                        <option value="BtoB Tools">BtoB Tools</option>
+<option value="DeepTech">DeepTech</option>
+<option value="Distribution & BtoC">Distribution & BtoC</option>
+<option value="Entertainment">Entertainment</option>
+<option value="FinTech">FinTech</option>
+<option value="HealthTech">HealthTech</option>
+<option value="Impact">Impact</option>
+<option value="Industry & Supply">Industry & Supply</option>
+<option value="MarTech">MarTech</option>
+                    </select>
+                    <select class="filter-select" id="regionFilter" onchange="applyFilters()">
+                        <option value="">All Regions</option>
+                        <option value="Auvergne-Rhône-Alpes">Auvergne-Rhône-Alpes</option>
+<option value="Bourgogne Franche Comté">Bourgogne Franche Comté</option>
+<option value="Bretagne">Bretagne</option>
+<option value="Corse">Corse</option>
+<option value="Grand Est">Grand Est</option>
+<option value="Hauts-de-France">Hauts-de-France</option>
+<option value="Normandie">Normandie</option>
+<option value="Nouvelle-Aquitaine">Nouvelle-Aquitaine</option>
+<option value="Occitanie">Occitanie</option>
+<option value="Pays de la Loire">Pays de la Loire</option>
+<option value="Provence-Alpes-Côte d’Azur">Provence-Alpes-Côte d’Azur</option>
+<option value="Île-de-France">Île-de-France</option>
+                    </select>
+                </div>
+
+                <div class="sort-controls">
+                    <span class="sort-label">Sort by:</span>
+                    <button class="sort-btn active" onclick="setSort('growth','desc')" id="sort-growth-desc">
+                        <span>Growth %</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <button class="sort-btn" onclick="setSort('growth','asc')" id="sort-growth-asc">
+                        <span>Growth %</span>
+                        <span class="arrow">&#9650;</span>
+                    </button>
+                    <button class="sort-btn" onclick="setSort('hires','desc')" id="sort-hires-desc">
+                        <span>Hires</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <button class="sort-btn" onclick="setSort('hires','asc')" id="sort-hires-asc">
+                        <span>Hires</span>
+                        <span class="arrow">&#9650;</span>
+                    </button>
+                    <button class="sort-btn" onclick="setSort('company','asc')" id="sort-company-asc">
+                        <span>Name A-Z</span>
+                        <span class="arrow">&#9650;</span>
+                    </button>
+                    <button class="sort-btn" onclick="setSort('employees2026','desc')" id="sort-employees2026-desc">
+                        <span>Team Size</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                </div>
+
+                <div class="sector-pills" id="sectorPills"></div>
+                <div class="results-info" id="resultsInfo"></div>
+            </section>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="col-rank">#</th>
+                            <th class="col-company">Company</th>
+                            <th class="col-sector">Sector</th>
+                            <th class="col-hq">Region</th>
+                            <th class="col-employees sortable" onclick="setSort('employees2026')" id="th-employees2026">
+                                <span class="th-content">Employees <span class="sort-arrow">&#9650;</span></span>
+                            </th>
+                            <th class="col-growth sortable" onclick="setSort('growth')" id="th-growth">
+                                <span class="th-content">Growth <span class="sort-arrow">&#9660;</span></span>
+                            </th>
+                            <th class="col-hires sortable" onclick="setSort('hires')" id="th-hires">
+                                <span class="th-content">Hires <span class="sort-arrow">&#9660;</span></span>
+                            </th>
+                            <th class="col-website"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+
+            <div class="pagination" id="pagination"></div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p class="footer-text">TECH 500 2026 &mdash; Ranking of France's fastest-growing tech companies by employee growth</p>
+        </div>
+    </footer>
+
+    <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+    </button>
+
+    <script>
+    const DATA = [{"company":"Battri","description":"Recyclage des batteries lithium-ion","employees2025":11,"employees2026":26,"growth":237,"hires":15,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Hauts-de-France","website":"abby.fr"},{"company":"Kolecto","description":"La solution de gestion des TPE-PME qui font l'économie française","employees2025":47,"employees2026":136,"growth":189,"hires":89,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"kolecto.fr"},{"company":"Foodflow","description":"Néodistributeur pour les professionnels de la restauration simple, rapide et transparent","employees2025":19,"employees2026":54,"growth":184,"hires":35,"sector":"Distribution & BtoC (RetailTech, e-commerce, Marketplace, Foodtech, Luxury, TravelTech, ...)","headquarters":"Île-de-France","website":"FoodFlow.com"},{"company":"Qevlar Ai","description":"Plateforme SOC IA qui n’hallucine pas","employees2025":16,"employees2026":45,"growth":181,"hires":29,"sector":"DeepTech (IA, Cybersecurity, Cloud, ...)","headquarters":"Île-de-France","website":"qevlar.com"},{"company":"Getvocal Ai","description":"Gagnez la confiance de vos clients avec des agents hybrides humain-IA","employees2025":19,"employees2026":53,"growth":179,"hires":34,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"getvocal.ai"},{"company":"Reusses","description":"Confiez les vêtements que vous ne portez plus à une de nos reusses. *Statut VDI intégré","employees2025":200,"employees2026":550,"growth":175,"hires":350,"sector":"Distribution & BtoC (RetailTech, e-commerce, Marketplace, Foodtech, Luxury, TravelTech, ...)","headquarters":"Île-de-France","website":"reusses.com"},{"company":"Mistral Ai","description":"IA de pointe. Entre vos mains.","employees2025":270,"employees2026":687,"growth":154,"hires":417,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"mistral.ai"},{"company":"Revolt.Eco","description":"Le système d'exploitation des installateurs de la transition énergétique","employees2025":10,"employees2026":25,"growth":150,"hires":15,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"revolt.eco"},{"company":"Tomorro","description":"La gestion de contrats, à l’ère de l’IA","employees2025":73,"employees2026":180,"growth":146,"hires":107,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"tomorro.com"},{"company":"Hexana","description":"Système nucléaire modulaire et flexible de 4e génération","employees2025":25,"employees2026":60,"growth":140,"hires":35,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Provence-Alpes-Côte d’Azur","website":"hexana.fr"},{"company":"Spore.Bio","description":"La nouvelle technologie de tests microbiologiques ultra-rapides basée sur l’IA","employees2025":18,"employees2026":43,"growth":139,"hires":25,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"Spore.bio"},{"company":"Dust","description":"Le système d’exploitation pour agents IA","employees2025":47,"employees2026":112,"growth":138,"hires":65,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"dust.tt"},{"company":"Noota","description":"L'IA faite pour les recruteurs.","employees2025":14,"employees2026":33,"growth":136,"hires":19,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"noota.io"},{"company":"Konectiv","description":"Portage salarial en combinant un accompagnement humain sur-mesure, transparence des frais et outils digitaux performants pour faire de l’indépendance un accélérateur de carrière","employees2025":45,"employees2026":102,"growth":127,"hires":57,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Provence-Alpes-Côte d’Azur","website":"konectiv.fr"},{"company":"Spiko","description":"Rémunérez votre trésorerie au taux sans risque","employees2025":12,"employees2026":27,"growth":125,"hires":15,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"spiko.io"},{"company":"Kenko","description":"L'assurance qui s’adapte à la santé de vos collaborateurs","employees2025":14,"employees2026":31,"growth":121,"hires":17,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"kenko.fr"},{"company":"Tilt","description":"Révélez tout le potentiel de la flexibilité électrique","employees2025":10,"employees2026":22,"growth":120,"hires":21,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"tilt-energy.com"},{"company":"Rosk","description":"L'application des professionnels de la restauration","employees2025":13,"employees2026":28,"growth":115,"hires":15,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"rosk.com"},{"company":"Cureety","description":"Cureety accompagne les patients, les professionnels de santé, et les chercheurs dans leur lutte contre le cancer.","employees2025":40,"employees2026":85,"growth":113,"hires":45,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"cureety.com"},{"company":"Tamtam","description":"Les agents IA pour la vente complexe","employees2025":10,"employees2026":21,"growth":110,"hires":11,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"tamtam.ai"},{"company":"Reelevant","description":"Personnaliser l'expérience client automatiquement","employees2025":12,"employees2026":25,"growth":108,"hires":13,"sector":"MarTech (Ad-Tech, Marketing Automation, CRM, DMP & Analytics, SEO, ...)","headquarters":"Île-de-France","website":"reelevant.com"},{"company":"Electra","description":"Réseau de recharge ultra rapide pour véhicule électrique partout en Europe","employees2025":125,"employees2026":254,"growth":103,"hires":129,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"go-electra.com"},{"company":"Raidium","description":"L’IA universelle pour la radiologie","employees2025":20,"employees2026":40,"growth":100,"hires":20,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"raidium.eu"},{"company":"Upway","description":"L'expert du vélo électrique reconditionné","employees2025":50,"employees2026":100,"growth":100,"hires":50,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"upway.shop"},{"company":"Harmattan Ai","description":"Construire l’avenir de la guerre autonome","employees2025":50,"employees2026":96,"growth":92,"hires":46,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"harmattan.ai"},{"company":"Diagnoly","description":"Diagnostics échographiques fœtaux par IA / transformer le dépistage obstétrical","employees2025":10,"employees2026":19,"growth":90,"hires":9,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"diagnoly.com"},{"company":"Malibou","description":"Logiciel RH et paie tout-en-un pour les PME européennes","employees2025":18,"employees2026":33,"growth":83,"hires":15,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"malibou.co"},{"company":"Sora","description":"Réinventons la sous-location","employees2025":11,"employees2026":20,"growth":82,"hires":9,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"sora.space"},{"company":"Aive","description":"Le copilote IA créatif qui automatise la production vidéo","employees2025":31,"employees2026":56,"growth":81,"hires":25,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"aive.com"},{"company":"Luniwave","description":"Mettez en avant vos actions RSE et récompensez vos clients","employees2025":10,"employees2026":18,"growth":80,"hires":8,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"luniwave.com"},{"company":"MyUnisoft","description":"La première plateforme dédiée aux experts-comptables 100% souveraine","employees2025":124,"employees2026":223,"growth":80,"hires":99,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"myunisoft.fr"},{"company":"Infinite Orbits","description":"Façonner l’avenir des services en orbite","employees2025":57,"employees2026":102,"growth":79,"hires":45,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Occitanie","website":"infiniteorbits.io"},{"company":"Ncodin","description":"Un interposeur optique","employees2025":19,"employees2026":34,"growth":79,"hires":15,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"ncodin.com"},{"company":"Akteo","description":"AKteurs de la décarbonation","employees2025":26,"employees2026":46,"growth":78,"hires":20,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Pays de la Loire","website":"akteo.fr"},{"company":"Favikon","description":"Plateforme de marketing d’influence B2B propulsée par l’IA","employees2025":101,"employees2026":178,"growth":76,"hires":77,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"favikon.com"},{"company":"Vizzia","description":"Le partenaire des collectivités","employees2025":42,"employees2026":74,"growth":76,"hires":32,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"vizzia.fr"},{"company":"Yneuro","description":"Plongez dans le futur de l’authentification personnelle","employees2025":12,"employees2026":21,"growth":75,"hires":9,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"www.yneuro.com"},{"company":"Look Up Space","description":"Protéger les actifs et les opérations spatiales pour une vie meilleure sur terre","employees2025":65,"employees2026":112,"growth":72,"hires":47,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Occitanie","website":"lookupspace.com"},{"company":"Leakmited","description":"Réduisez durablement les pertes d’eau de votre réseau, sans risque pour votre budget.","employees2025":27,"employees2026":46,"growth":70,"hires":19,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"leakmited.com"},{"company":"Witivio","description":"Nous créons des solutions IA pour Microsoft 365","employees2025":23,"employees2026":39,"growth":70,"hires":16,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"witivio.com"},{"company":"Toporder","description":"La caisse enregistreuse des commerces modernes","employees2025":27,"employees2026":46,"growth":70,"hires":19,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"toporder.fr"},{"company":"Sustainsoft","description":"La conformité ESG simplifiée","employees2025":10,"employees2026":17,"growth":70,"hires":7,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"sustainsoft.eu"},{"company":"Delivery Car","description":"Convoyage de vos véhicules","employees2025":36,"employees2026":61,"growth":69,"hires":25,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"deliverycar.fr"},{"company":"Cercle Des Langues","description":"Prenez plaisir à parler une nouvelle langue","employees2025":58,"employees2026":97,"growth":67,"hires":39,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"cercledeslangues.com"},{"company":"Gen-Hy","description":"Solutions hydrogène","employees2025":15,"employees2026":25,"growth":67,"hires":10,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"gen-hy.com"},{"company":"Skynopy","description":"Le service de station sol de bout en bout","employees2025":18,"employees2026":30,"growth":66,"hires":12,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"skynopy.com"},{"company":"Legalplace","description":"Lancez votre entreprise dès aujourd'hui","employees2025":182,"employees2026":301,"growth":65,"hires":119,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"legalplace.fr"},{"company":"Dfns","description":"Contrôlez tout ce que vous construisez et exécutez sur les blockchains partout dans le monde.","employees2025":20,"employees2026":33,"growth":65,"hires":13,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"dfns.co"},{"company":"One Biosciences","description":"Médecine de précision haute résolution","employees2025":22,"employees2026":36,"growth":64,"hires":14,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"onebiosciences.fr"},{"company":"Nova Carbon","description":"Composites en fibre de carbone durables haute performance","employees2025":14,"employees2026":23,"growth":64,"hires":9,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Nouvelle-Aquitaine","website":"nova-carbon.com"},{"company":"Maki","description":"Scaler vos recrutements parfaitement","employees2025":73,"employees2026":120,"growth":64,"hires":47,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"makipeople.com"},{"company":"Muchbetter","description":"Leader français de l’entrainement commercial grâce à l’IA","employees2025":19,"employees2026":31,"growth":63,"hires":12,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"muchbetter.ai"},{"company":"Skarlett","description":"Après 60 ans, boostez vos finances","employees2025":26,"employees2026":42,"growth":62,"hires":16,"sector":"Distribution & BtoC (RetailTech, e-commerce, Marketplace, Foodtech, Luxury, TravelTech, ...)","headquarters":"Île-de-France","website":"skarlett.fr"},{"company":"Pictarine","description":"Application qui permet de modifier et d'imprimer des photos en 3 clics, partout aux Etats-Unis","employees2025":75,"employees2026":120,"growth":60,"hires":45,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Occitanie","website":"pictarine.com"},{"company":"Alice & Bob","description":"Construire le premier ordinateur quantique universel","employees2025":135,"employees2026":216,"growth":60,"hires":81,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"alice-bob.com"},{"company":"Intact","description":"Protéines végétales et produits de fermentation régénératifs","employees2025":27,"employees2026":43,"growth":59,"hires":16,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Pays de la Loire","website":"intact-regenerative.com"},{"company":"Jimo","description":"Une IA qui onboard vos utilisateurs à votre place.","employees2025":12,"employees2026":19,"growth":58,"hires":7,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"usejimo.com"},{"company":"Mantra","description":"Sensibilisez et protégez vos collaborateurs en temps réel","employees2025":33,"employees2026":52,"growth":58,"hires":19,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"mantra.ms"},{"company":"Ouihelp","description":"Service d'aide à domicile","employees2025":488,"employees2026":770,"growth":58,"hires":282,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"ouihelp.fr"},{"company":"Lumeen","description":"Lumeen, la réalité virtuelle humaine et thérapeutique.","employees2025":21,"employees2026":33,"growth":57,"hires":12,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"lumeen.com"},{"company":"Bleu","description":"Entreprise de services cloud, française, indépendante.","employees2025":17,"employees2026":27,"growth":57,"hires":10,"sector":"DeepTech (IA, Cybersecurity, Cloud, ...)","headquarters":"Île-de-France","website":"bleucloud.fr"},{"company":"Wealthcome","description":"La technologie au service de votre conseil patrimonial.","employees2025":25,"employees2026":39,"growth":57,"hires":14,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Nouvelle-Aquitaine","website":"wealthcome.fr"},{"company":"Aviwell","description":"Exploiter notre plateforme de découverte révolutionnaire pour nourrir la planète","employees2025":16,"employees2026":25,"growth":56,"hires":9,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Occitanie","website":"aviwell.fr"},{"company":"Generare Bioscience","description":"Découverte de molécules naturelles, (ré)industrialisée","employees2025":18,"employees2026":28,"growth":56,"hires":10,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"generare.bio"},{"company":"Bwi","description":"Anticiper la dynamique des rivières pour mieux décider en gestion de l’eau.","employees2025":22,"employees2026":34,"growth":55,"hires":12,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Occitanie","website":"bwi.earth"},{"company":"Phagos","description":"L'alternative naturelle aux antibiotiques","employees2025":33,"employees2026":51,"growth":55,"hires":18,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"phagos.org"},{"company":"Emyosound","description":"La transformation est en vue","employees2025":13,"employees2026":20,"growth":54,"hires":7,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"emyosound.com"},{"company":"Valueco","description":"Aligner valeurs et valorisations pour un système financier responsable","employees2025":24,"employees2026":37,"growth":54,"hires":13,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"valuecometrics.com"},{"company":"Naboo","description":"Solutions d'achat IA pour l'événementiel d'entreprise","employees2025":135,"employees2026":208,"growth":54,"hires":73,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"naboo.app"},{"company":"Interfast","description":"Le logiciel de gestion des entreprises du bâtiment","employees2025":17,"employees2026":26,"growth":53,"hires":9,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"inter-fast.co"},{"company":"Rockfi","description":"La nouvelle gestion privée.","employees2025":36,"employees2026":55,"growth":53,"hires":19,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"rockfi.fr"},{"company":"Fabriq","description":"La solution tout-en-un pour l’excellence opérationnelle","employees2025":89,"employees2026":136,"growth":53,"hires":47,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"fabriq.tech"},{"company":"Ray Studios","description":"Des centres 100% dédiés au détatouage laser","employees2025":36,"employees2026":55,"growth":53,"hires":19,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Île-de-France","website":"ray-studios.com"},{"company":"Solteo","description":"Operating system des installateurs d’énergies renouvelables. Plateforme tout-en-un qui optimise les projets ENR.","employees2025":17,"employees2026":26,"growth":53,"hires":9,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"solteo.fr"},{"company":"H Company","description":"Pionnier du futur de l’IA autonome et agentique.","employees2025":211,"employees2026":321,"growth":52,"hires":110,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"hcompany.ai"},{"company":"Ensol","description":"Achetez ou louez votre installation solaire","employees2025":50,"employees2026":76,"growth":52,"hires":26,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"goensol.com"},{"company":"Renaissance Fusion","description":"Les réacteurs de fusion les plus efficaces, réguliers et stables au monde.","employees2025":63,"employees2026":95,"growth":51,"hires":32,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"renfusion.eu"},{"company":"Joko","description":"Joko vous aide à acheter plus vite, moins cher et sans prise de tête","employees2025":109,"employees2026":165,"growth":51,"hires":56,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"joko.com"},{"company":"Seavium","description":"Affrètement offshore par IA. Plus intelligent. Plus rapide. Plus vert.","employees2025":10,"employees2026":15,"growth":50,"hires":5,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Provence-Alpes-Côte d’Azur","website":"seavium.com"},{"company":"Wattmen","description":"Une électricité responsable : produite pour durer, pensée pour être stockée","employees2025":12,"employees2026":18,"growth":50,"hires":6,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"wattmen.fr"},{"company":"Altrove","description":"Découverte de nouveaux matériaux par IA pour résilience et performance","employees2025":16,"employees2026":24,"growth":50,"hires":8,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"altrove.ai"},{"company":"Theremia","description":"Médecine de précision en neurologie et psychiatrie boostée à l'IA","employees2025":10,"employees2026":15,"growth":50,"hires":5,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"theremia.health"},{"company":"Santafoo","description":"Faites vos courses : les meilleurs produits, les plus proches de chez vous","employees2025":14,"employees2026":21,"growth":50,"hires":7,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Provence-Alpes-Côte d’Azur","website":"Santafoo.fr"},{"company":"Doctrine","description":"La 1re plateforme d'IA juridique en Europe.","employees2025":150,"employees2026":225,"growth":50,"hires":75,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"doctrine.fr"},{"company":"Diablocom","description":"Solutions cloud IA pour l'expérience client","employees2025":158,"employees2026":237,"growth":50,"hires":28,"sector":"DeepTech (IA, Cybersecurity, Cloud, ...)","headquarters":"Île-de-France","website":"diabolocom.com"},{"company":"Stoik","description":"Assurance et cybersécurité","employees2025":93,"employees2026":139,"growth":49,"hires":46,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"stoik.io"},{"company":"Chift","description":"Connectez vos logiciels financiers en un clic","employees2025":23,"employees2026":34,"growth":48,"hires":11,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"chift.eu"},{"company":"Solarock","description":"Votre installateur de panneaux solaires local","employees2025":17,"employees2026":25,"growth":47,"hires":8,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"solarock.fr"},{"company":"Neoline","description":"Transport maritime à la voile.","employees2025":28,"employees2026":41,"growth":46,"hires":13,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Pays de la Loire","website":"neoline.eu"},{"company":"73 Strings","description":"Augmenter l’intelligence. Créer de la valeur.","employees2025":203,"employees2026":297,"growth":46,"hires":94,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"73strings.com"},{"company":"Hyprspace","description":"Le premier moteur-fusée hybride scalable, combinant simplicité, robustesse et réactivité","employees2025":76,"employees2026":111,"growth":46,"hires":35,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Nouvelle-Aquitaine","website":"hypr-space.com"},{"company":"Bacta","description":"Bioproduction propulsée par l’IA pour des ingrédients industriels","employees2025":11,"employees2026":16,"growth":45,"hires":5,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"bacta.life"},{"company":"Pronoe","description":"Restaurer la capacité naturelle de l’océan à capter et stocker durablement le CO2","employees2025":11,"employees2026":16,"growth":45,"hires":5,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"pronoe.earth"},{"company":"Pennylane","description":"L'outil qui réunit vos finances, votre comptabilité et votre compte pro","employees2025":644,"employees2026":934,"growth":45,"hires":290,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"pennylane.tech"},{"company":"Skillcorner","description":"Boostez la prise de décision dans le sport.","employees2025":45,"employees2026":65,"growth":44,"hires":20,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Île-de-France","website":"skillcorner.com"},{"company":"Alloreview","description":"Collectez plus de feedbacks, plus qualitatifs, par la voix.","employees2025":16,"employees2026":23,"growth":44,"hires":7,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"alloreview.com"},{"company":"Omnyai","description":"Libérez votre e-commerce","employees2025":16,"employees2026":23,"growth":44,"hires":7,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"get-omny.com"},{"company":"Bonx","description":"Reprenez le contrôle de votre ERP","employees2025":25,"employees2026":36,"growth":44,"hires":11,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"bonx.tech"},{"company":"Marble","description":"Automatisation fraude & conformité propulsée par l’IA","employees2025":195,"employees2026":281,"growth":44,"hires":86,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"checkmarble.com"},{"company":"Hummink","description":"Impression de haute précision pour l’électronique avancée et au-delà","employees2025":16,"employees2026":23,"growth":44,"hires":7,"sector":"DeepTech (IA, Cybersecurity, Cloud, ...)","headquarters":"Île-de-France","website":"hummink.com"},{"company":"Le Drive tout nu","description":"Réseau de supermarchés zéro déchet en physique, en drive et livraison","employees2025":41,"employees2026":59,"growth":43,"hires":18,"sector":"Distribution & BtoC (RetailTech, e-commerce, Marketplace, Foodtech, Luxury, TravelTech, ...)","headquarters":"Occitanie","website":"ledrivetoutnu.com"},{"company":"May","description":"Offrez de la rémunération 100% exonérée à vos salariés","employees2025":89,"employees2026":127,"growth":43,"hires":38,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"may.fr"},{"company":"Ealico","description":"La meilleure façon de gérer vos contrôles","employees2025":19,"employees2026":27,"growth":42,"hires":8,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"ealico.com"},{"company":"Tarmac Technologies","description":"Optimisation des opérations sol pour le transport aérien","employees2025":12,"employees2026":17,"growth":42,"hires":5,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"tarmactechnologies.com"},{"company":"Photoroom","description":"Créez des visuels pro qui vendent","employees2025":460,"employees2026":649,"growth":41,"hires":189,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"photoroom.com"},{"company":"Assentis","description":"L’expert qui vous décrypte l’assurance","employees2025":39,"employees2026":55,"growth":41,"hires":16,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"assentis.fr"},{"company":"Nutripure","description":"Compléments alimentaires naturels pour votre santé","employees2025":71,"employees2026":100,"growth":41,"hires":29,"sector":"Distribution & BtoC (RetailTech, e-commerce, Marketplace, Foodtech, Luxury, TravelTech, ...)","headquarters":"Occitanie","website":"nutripure.fr"},{"company":"Klark","description":"Renforcez votre équipe support avec notre intégration rapide à vos outils, pensée pour les acteurs du e-commerce.","employees2025":17,"employees2026":24,"growth":41,"hires":7,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Nouvelle-Aquitaine","website":"klark.ai"},{"company":"Koralplay","description":"Éditeur de jeux de casinos et paris sportifs","employees2025":60,"employees2026":84,"growth":40,"hires":24,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Pays de la Loire","website":"koralplay.com"},{"company":"Sunday","description":"L’expérience de paiement qui fait gagner du temps et génère 5× plus d’avis Google.","employees2025":182,"employees2026":253,"growth":39,"hires":71,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"sundayapp.com"},{"company":"Chez Daddy","description":"Mieux vieillir dans une ville attentive aux aînés","employees2025":32,"employees2026":44,"growth":38,"hires":12,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"entourage-solidaire.fr"},{"company":"Kraaft","description":"L'app 7 en 1. Le WhatsApp des chantiers.","employees2025":45,"employees2026":62,"growth":38,"hires":17,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Île-de-France","website":"kraaft.co"},{"company":"Tengo","description":"Gagnez enfin plus d’appels d’offres publics","employees2025":16,"employees2026":22,"growth":38,"hires":6,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"tengo.cc"},{"company":"Boonty","description":"Boostez votre programme de fidélité, dès le paiement","employees2025":16,"employees2026":22,"growth":38,"hires":6,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Nouvelle-Aquitaine","website":"boonty.io"},{"company":"Sirius Space Services","description":"Accès à l’espace. Redéfini.","employees2025":91,"employees2026":126,"growth":38,"hires":35,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"sirius-space.com"},{"company":"Trace For Good","description":"Connaissez vos produits, engagez vos fournisseurs, connectez vos clients.","employees2025":13,"employees2026":18,"growth":38,"hires":5,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"traceforgood.com"},{"company":"Exo","description":"Un outil certifié pour une agriculture pérenne","employees2025":19,"employees2026":26,"growth":37,"hires":7,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"exo.expert"},{"company":"Aplo","description":"Prime brokerage d’actifs digitaux pour institutions financières.","employees2025":19,"employees2026":26,"growth":37,"hires":7,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"aplo.io"},{"company":"Afterdata","description":"Intelligence artificielle pour la conformité","employees2025":19,"employees2026":26,"growth":37,"hires":7,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"afterdata.com"},{"company":"Webyn","description":"Optimisation de votre site web, automatiquement via l’IA","employees2025":22,"employees2026":30,"growth":36,"hires":8,"sector":"MarTech (Ad-Tech, Marketing Automation, CRM, DMP & Analytics, SEO, ...)","headquarters":"Île-de-France","website":"webyn.ai"},{"company":"Indy","description":"Simplifiez bien plus que votre comptabilité","employees2025":235,"employees2026":320,"growth":36,"hires":85,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"indy.fr"},{"company":"Otrera","description":"Redéfinir le nucléaire pour un futur durable","employees2025":28,"employees2026":38,"growth":36,"hires":10,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Provence-Alpes-Côte d’Azur","website":"otrera.fr"},{"company":"Deeplife","description":"Jumeau numérique des cellules pour la découverte de médicaments","employees2025":25,"employees2026":34,"growth":36,"hires":9,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"deeplife.co"},{"company":"Safesanté","description":"La téléconsultation ultra performante","employees2025":22,"employees2026":30,"growth":36,"hires":8,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Provence-Alpes-Côte d’Azur","website":"safesante.fr"},{"company":"Hapni","description":"Réseau d'établissements spécialisés en médecine du sommeil","employees2025":11,"employees2026":15,"growth":36,"hires":4,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"hapni.net"},{"company":"Dashdoc","description":"L'IA au service du logiciel de transport routier","employees2025":88,"employees2026":120,"growth":36,"hires":32,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"dashdoc.com"},{"company":"Strangebee","description":"Renforcez votre réponse aux incidents de sécurité","employees2025":50,"employees2026":68,"growth":36,"hires":18,"sector":"DeepTech (IA, Cybersecurity, Cloud, ...)","headquarters":"Île-de-France","website":"strangebee.com"},{"company":"Spark Cleantech","description":"Transformer les émissions de carbone en matériaux carbone","employees2025":26,"employees2026":35,"growth":35,"hires":9,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"spark-cleantech.eu"},{"company":"Citizenplane","description":"Système d’exploitation pour compagnies aériennes innovantes","employees2025":49,"employees2026":66,"growth":35,"hires":17,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"CitizenPlane.com"},{"company":"Milango","description":"Rêvez grand. Nous vous accompagnons ! Solutions e-commerce & marketplace","employees2025":26,"employees2026":35,"growth":35,"hires":9,"sector":"Distribution & BtoC (RetailTech, e-commerce, Marketplace, Foodtech, Luxury, TravelTech, ...)","headquarters":"Île-de-France","website":"milango.io"},{"company":"Jib","description":"Solutions technologiques qui favorisent l’autonomie des personnes en situation de handicap moteur","employees2025":92,"employees2026":124,"growth":35,"hires":32,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"jib-home.com"},{"company":"Dedale Intelligence","description":"La source de référence pour le renseignement stratégique en technologie","employees2025":264,"employees2026":357,"growth":35,"hires":93,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"dedale.com"},{"company":"Lite","description":"Votre premier geste pour la planète commence chez vous.","employees2025":17,"employees2026":23,"growth":35,"hires":6,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"lite.eco"},{"company":"Manaos","description":"La plateforme de services d’investissement durable","employees2025":140,"employees2026":189,"growth":35,"hires":49,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"manaos.com"},{"company":"Qualineo","description":"Le logiciel qualité des établissements de santé pensé pour vous","employees2025":27,"employees2026":36,"growth":35,"hires":9,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Hauts-de-France","website":"qualineo.io"},{"company":"Le Fourgon","description":"Le Fourgon est un service e-commerce de livraison de produits consignés","employees2025":325,"employees2026":437,"growth":34,"hires":112,"sector":"Distribution & BtoC (RetailTech, e-commerce, Marketplace, Foodtech, Luxury, TravelTech, ...)","headquarters":"Île-de-France","website":"lefourgon.com"},{"company":"Mila","description":"Assureur français spécialisé dans l’immobilier.","employees2025":67,"employees2026":90,"growth":34,"hires":23,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"mila.fr"},{"company":"Mini Green Power","description":"Des mini centrales vertes innovantes pour produire de l’énergie bas carbone et séquestrer du CO2","employees2025":29,"employees2026":39,"growth":34,"hires":10,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Provence-Alpes-Côte d’Azur","website":"minigreenpower.com"},{"company":"Leviia","description":"Solutions de stockage cloud souveraines, sécurisées, à des prix justes et transparents.","employees2025":24,"employees2026":32,"growth":33,"hires":8,"sector":"DeepTech (IA, Cybersecurity, Cloud, ...)","headquarters":"Île-de-France","website":"leviia.com"},{"company":"Opisto","description":"Le spécialiste des pièces auto d’occasion","employees2025":69,"employees2026":92,"growth":33,"hires":23,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Occitanie","website":"opisto.fr"},{"company":"Capsens","description":"L'agence web n°1 des fintechs","employees2025":50,"employees2026":67,"growth":33,"hires":17,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"capsens.eu"},{"company":"Octopus Energy","description":"Energéticien tech","employees2025":340,"employees2026":450,"growth":32,"hires":110,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"octopusenergy.fr"},{"company":"Spliit","description":"La recherche de bureaux repensée pour vous.","employees2025":25,"employees2026":33,"growth":32,"hires":8,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"spliit.fr"},{"company":"Dastra","description":"Optimisez la gestion de la conformité règlementaire (RGPD, e-privacy, AI Act, NIS2, DORA)","employees2025":31,"employees2026":41,"growth":32,"hires":10,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"dastra.eu"},{"company":"Everdye","description":"Les couleurs les plus tendance, sans brûlure.","employees2025":28,"employees2026":37,"growth":32,"hires":9,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"everdye.fr"},{"company":"Flowdesk","description":"En service 24/7/365 avec les plus grands émetteurs de tokens et institutions.","employees2025":151,"employees2026":199,"growth":32,"hires":48,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"flowdesk.co"},{"company":"Signitic","description":"Libérez la puissance de vos signatures mails","employees2025":16,"employees2026":21,"growth":31,"hires":5,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"signitic.com"},{"company":"Pimpant","description":"Vos produits du quotidien rechargeables, efficaces et sensoriels","employees2025":68,"employees2026":89,"growth":31,"hires":21,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Normandie","website":"pimpant.com"},{"company":"Ghs","description":"Outils de gestion sociale innovants, pensés pour les secteurs à contrats courts","employees2025":111,"employees2026":145,"growth":31,"hires":34,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"ghs.fr"},{"company":"Ecodrop","description":"Solution rapide, économique et éco-responsable de collecte et dépôt de déchets de chantier","employees2025":49,"employees2026":64,"growth":31,"hires":15,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"ecodrop.net"},{"company":"Rivrs","description":"Ensemble, nous créons des jeux UGC de haute qualité sur toutes les plateformes sandbox tendance","employees2025":45,"employees2026":59,"growth":31,"hires":14,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Bretagne","website":"rivrs.io"},{"company":"Ublo","description":"Ublo, votre logiciel de gestion immobilière","employees2025":29,"employees2026":38,"growth":31,"hires":9,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"ublo.immo"},{"company":"Jus Mundi","description":"Agent IA pour le droit international et l’arbitrage","employees2025":102,"employees2026":133,"growth":30,"hires":31,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"jusmundi.com"},{"company":"Hyppo","description":"Expert en financement et refinancement patrimonial","employees2025":10,"employees2026":13,"growth":30,"hires":3,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"hyppo.immo"},{"company":"Deephawk","description":"Intelligence artificielle nouvelle génération","employees2025":10,"employees2026":13,"growth":30,"hires":3,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Bretagne","website":"deephawk.ai"},{"company":"Hairdex","description":"Reprenez en main vos cheveux","employees2025":10,"employees2026":13,"growth":30,"hires":3,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"hairdex.fr"},{"company":"Aml Factory","description":"Simplifiez vos processus de compliance LCB-FT","employees2025":10,"employees2026":13,"growth":30,"hires":3,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"aml-factory.com"},{"company":"Pinpo","description":"Maximisez vos ventes grâce aux meilleurs AI sales specialists du marché","employees2025":10,"employees2026":13,"growth":30,"hires":3,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"pinpo.fr"},{"company":"Expliseat","description":"Solutions de sièges 40% plus légers pour l’aviation","employees2025":90,"employees2026":117,"growth":30,"hires":27,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"expliseat.com"},{"company":"Daia","description":"Connectez votre aéroport","employees2025":10,"employees2026":13,"growth":30,"hires":3,"sector":"DeepTech (IA, Cybersecurity, Cloud, ...)","headquarters":"Provence-Alpes-Côte d’Azur","website":"daia.tech"},{"company":"Knave","description":"Solution 360° de paiement à l'usage en marque blanche","employees2025":20,"employees2026":26,"growth":30,"hires":6,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"knave.eu"},{"company":"Aria","description":"Financement intégré pour les plateformes B2B","employees2025":66,"employees2026":86,"growth":30,"hires":20,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"helloaria.eu"},{"company":"Manager.One","description":"La banque en ligne pour les professionnels.","employees2025":60,"employees2026":78,"growth":30,"hires":18,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"manager.one"},{"company":"Bitstack","description":"Épargner en bitcoin sans aucun effort","employees2025":33,"employees2026":43,"growth":30,"hires":10,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"bitstack-app.com"},{"company":"Swish","description":"Accélérez votre transition vers la mobilité électrique avec Swish","employees2025":47,"employees2026":61,"growth":30,"hires":14,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"swishforgood.com"},{"company":"Aps Agnostic Production Systems","description":"Rendre la digitalisation accessible à toutes les usines, même les plus petites.","employees2025":10,"employees2026":13,"growth":30,"hires":3,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Occitanie","website":"aps-industry.com"},{"company":"Club Employés","description":"Plateforme CSE : la solution qui simplifie, valorise et réinvente vos avantages salariés","employees2025":266,"employees2026":345,"growth":30,"hires":79,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"club-employes.com"},{"company":"Sinari","description":"La suite logicielle de référence pour le transport et la logistique","employees2025":99,"employees2026":128,"growth":29,"hires":29,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"sinari.com"},{"company":"Kleep","description":"Le leader mondial de l’IA pour l’e-commerce","employees2025":14,"employees2026":18,"growth":29,"hires":4,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"kleep.ai"},{"company":"Neat Protect","description":"Conçoit et opère des assurances embarquées sur mesure adaptées à chaque secteur.","employees2025":78,"employees2026":101,"growth":29,"hires":23,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Nouvelle-Aquitaine","website":"neat.eu"},{"company":"Bocoloco","description":"Êtes-vous prêt à passer à la nouvelle dimension du réemploi ?","employees2025":17,"employees2026":22,"growth":29,"hires":5,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"bocoloco.fr"},{"company":"Icare Energie","description":"Le pilotage intelligent de vos bâtiments au service de la sobriété énergétique","employees2025":24,"employees2026":31,"growth":29,"hires":7,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Bourgogne Franche Comté","website":"icare-energie.fr"},{"company":"Thunders","description":"Des agents de test IA qui génèrent, exécutent et analysent","employees2025":24,"employees2026":31,"growth":29,"hires":7,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"thundercode.ai"},{"company":"Bioptimus","description":"Le premier modèle foundation IA universel pour la biologie","employees2025":28,"employees2026":36,"growth":29,"hires":8,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"bioptimus.com"},{"company":"Aletiq","description":"Le PLM nouvelle génération propulsé par l'IA","employees2025":24,"employees2026":31,"growth":29,"hires":7,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"aletiq.com"},{"company":"Dymasco","description":"Passer à des opérations industrielles dynamiques","employees2025":49,"employees2026":63,"growth":28,"hires":14,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"dymasco.com"},{"company":"Juvisé Pharmaceuticals","description":"Médicaments essentiels, pour préserver les traitements de confiance des médecins","employees2025":85,"employees2026":109,"growth":28,"hires":24,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"juvise.com"},{"company":"Polène","description":"Sacs et Petites Maroquineries - Créativité et savoir-faire d'excellence","employees2025":346,"employees2026":443,"growth":28,"hires":97,"sector":"Distribution & BtoC (RetailTech, e-commerce, Marketplace, Foodtech, Luxury, TravelTech, ...)","headquarters":"Île-de-France","website":"polene-paris.com"},{"company":"Aisprid","description":"Soutenir les hommes pour les nourrir durablement","employees2025":25,"employees2026":32,"growth":28,"hires":7,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Bretagne","website":"aisprid.com"},{"company":"Ikigai - Games For Citizens","description":"Un consortium national au service de l'innovation pédagogique et de la médiation culturelle & scientifique","employees2025":25,"employees2026":32,"growth":28,"hires":7,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Île-de-France","website":"ikigai.games"},{"company":"Inqom","description":"L’innovation au service des enjeux comptables de demain","employees2025":85,"employees2026":109,"growth":28,"hires":24,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Pays de la Loire","website":"inqom.com"},{"company":"Descartes Underwriting","description":"Assurance paramétrique pour climat, cyber & risques émergents","employees2025":196,"employees2026":250,"growth":28,"hires":54,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"descartesunderwriting.com"},{"company":"Ringover","description":"Plateforme de communication cloud boosté à l'IA","employees2025":290,"employees2026":370,"growth":28,"hires":80,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"ringover.com"},{"company":"Akur8","description":"Plateforme nouvelle génération de pricing et de provisionnement","employees2025":74,"employees2026":94,"growth":27,"hires":20,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"akur8-tech.com"},{"company":"Scienta Lab","description":"Redéfinir l’immunologie de précision","employees2025":15,"employees2026":19,"growth":27,"hires":4,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"scientalab.com"},{"company":"Open Lake Technology","description":"Maîtriser l'adoption, la supervision et la conformité de votre téléphonie unifiée","employees2025":11,"employees2026":14,"growth":27,"hires":3,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Île-de-France","website":"open-lake.com"},{"company":"Datapolitics","description":"Dotez vos équipes d’agents IA spécialisés en politiques publiques","employees2025":11,"employees2026":14,"growth":27,"hires":3,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"datapolitics.fr"},{"company":"Vema Hydrogen","description":"Hydrogène minéral conçu par ingénierie","employees2025":11,"employees2026":14,"growth":27,"hires":3,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"vema.earth"},{"company":"Red Alert Labs","description":"Faites confiance à vos produits connectés","employees2025":26,"employees2026":33,"growth":27,"hires":7,"sector":"DeepTech (IA, Cybersecurity, Cloud, ...)","headquarters":"Île-de-France","website":"redalertlabs.com"},{"company":"Smartbox France","description":"Les meilleures expériences ne se vivent pas sur un écran — elles se vivent. Nous connectons les personnes aux moments qui rendent la vie plus riche, plus profonde et plus réelle.","employees2025":45,"employees2026":57,"growth":27,"hires":12,"sector":"Distribution & BtoC (RetailTech, e-commerce, Marketplace, Foodtech, Luxury, TravelTech, ...)","headquarters":"Île-de-France","website":"smartbox.com"},{"company":"Aerleum","description":"Carburants et produits chimiques synthétiques à partir de rien (dans l’air)","employees2025":15,"employees2026":19,"growth":27,"hires":4,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"aerleum.com"},{"company":"Veesion","description":"Détectez les vols, automatiquement, en temps réel","employees2025":177,"employees2026":225,"growth":27,"hires":48,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"veesion.com"},{"company":"Klara","description":"Développer la performance de chaque acteur terrain pour renforcer le collectif","employees2025":45,"employees2026":57,"growth":27,"hires":12,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"www.klarahr.com"},{"company":"Bohr Energie","description":"Votre agrégateur 3.0 conçu par des producteurs pour des producteurs indépendants professionnels","employees2025":19,"employees2026":24,"growth":26,"hires":5,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Occitanie","website":"bohr-energie.fr"},{"company":"Ausha","description":"La plateforme de croissance podcast nouvelle génération","employees2025":34,"employees2026":43,"growth":26,"hires":9,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Hauts-de-France","website":"ausha.co"},{"company":"Naali","description":"Les gommes anti-stress au safran qui ont fait fureur sur M6","employees2025":27,"employees2026":34,"growth":26,"hires":7,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"naali.fr"},{"company":"Corteria Pharmaceuticals","description":"Thérapies interceptives pour traiter des sous-populations d’insuffisance cardiaque","employees2025":19,"employees2026":24,"growth":26,"hires":5,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"corteriapharma.com"},{"company":"Matcha","description":"Améliorez l’expérience shopper et boostez vos ventes avec un accompagnement personnalisé","employees2025":27,"employees2026":34,"growth":26,"hires":7,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"getmatcha.tech"},{"company":"Didomi","description":"Gestion du consentement utilisateur transformant la conformité réglementaire en un levier de confiance client, de croissance marketing et de valeur business.","employees2025":131,"employees2026":165,"growth":26,"hires":34,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"didomi.io"},{"company":"Myc","description":"Élevez la performance de l’entreprise grâce à une main-d’œuvre plus sûre et en meilleure santé","employees2025":66,"employees2026":83,"growth":26,"hires":17,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"myc.doctor"},{"company":"Zelty","description":"Digitalisez et pilotez vos restaurants sereinement","employees2025":47,"employees2026":59,"growth":26,"hires":12,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"zelty.fr"},{"company":"Hugging Face","description":"La communauté IA qui construit le futur.","employees2025":515,"employees2026":649,"growth":26,"hires":134,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"huggingface.co"},{"company":"Grinta","description":"Gérez vos boutiques, packs et commandes club depuis un seul outil","employees2025":23,"employees2026":8,"growth":26,"hires":6,"sector":"Distribution & BtoC (RetailTech, e-commerce, Marketplace, Foodtech, Luxury, TravelTech, ...)","headquarters":"Île-de-France","website":"grinta.eu"},{"company":"Dessia Technologies","description":"Générez, vérifiez et validez des designs avec l’IA","employees2025":27,"employees2026":34,"growth":26,"hires":7,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"dessia.io"},{"company":"Ouicoding","description":"Votre partenaire en transformation numérique durable et sécurisée","employees2025":19,"employees2026":24,"growth":26,"hires":5,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"ouicoding.com"},{"company":"Yeswehack","description":"Plateforme globale de bug bounty & de gestion des vulnérabilités","employees2025":438,"employees2026":552,"growth":26,"hires":114,"sector":"DeepTech (IA, Cybersecurity, Cloud, ...)","headquarters":"Île-de-France","website":"yeswehack.com"},{"company":"Zama","description":"Créez des applications confidentielles sur n’importe quelle blockchain","employees2025":156,"employees2026":197,"growth":26,"hires":41,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"zama.ai"},{"company":"Finary","description":"Finary est l'application qui vous aide à mieux gérer votre argent.","employees2025":123,"employees2026":155,"growth":26,"hires":32,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"finary.com"},{"company":"Bigblue","description":"Fulfilment pour les marques centrées client","employees2025":111,"employees2026":140,"growth":26,"hires":29,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Occitanie","website":"bigblue.io"},{"company":"Cure51","description":"Techbio française innovante dédiée à trouver un remède contre le cancer à partir de la biologie exceptionnelle de survivants","employees2025":43,"employees2026":54,"growth":26,"hires":11,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"cure51.com"},{"company":"Lehibou","description":"Trouvez le meilleur expert IT pour votre projet parmi les 120 000+ profils disponibles","employees2025":70,"employees2026":88,"growth":26,"hires":18,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"lehibou.com"},{"company":"Abby","description":"Facturation pour facturation électronique","employees2025":20,"employees2026":25,"growth":25,"hires":5,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Grand Est","website":"abby.fr"},{"company":"Feve","description":"Donnez vie à des fermes agroécologiques","employees2025":20,"employees2026":25,"growth":25,"hires":28,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Nouvelle-Aquitaine","website":"feve.co"},{"company":"Tafalgie Therapeutics","description":"Une nouvelle approche pharmaceutique pour traiter la douleur","employees2025":20,"employees2026":25,"growth":25,"hires":5,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Provence-Alpes-Côte d’Azur","website":"tafalgie.fr"},{"company":"Diligo","description":"Commerçants et e-commerçants, faites livrer en vélos cargos","employees2025":12,"employees2026":15,"growth":25,"hires":3,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"diligo-solutions.com"},{"company":"Brightheart","description":"Une plateforme IA qui accompagne cliniciens et échographistes pour des évaluations expertes standardisées lors des échographies de routine","employees2025":16,"employees2026":20,"growth":25,"hires":4,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"brightheart.fr"},{"company":"Lighton","description":"IA de recherche et de raisonnement derrière votre pare-feu","employees2025":60,"employees2026":75,"growth":25,"hires":15,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"lighton.ai"},{"company":"Dotblocks","description":"La première plateforme de simulation no-code conçue pour accélérer vos workflows d’innovation.","employees2025":12,"employees2026":15,"growth":25,"hires":3,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"dotblocks.fr"},{"company":"Fabulous","description":"Votre partenaire d’engagement dans votre poche pour changer intelligemment et construire de bonnes habitudes","employees2025":85,"employees2026":106,"growth":25,"hires":21,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Île-de-France","website":"thefabulous.co"},{"company":"Exaion","description":"Cloud de confiance","employees2025":63,"employees2026":79,"growth":25,"hires":16,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"exaion.com"},{"company":"Aqemia","description":"Nouvelle génération de médicaments, au-delà des limites de la découverte conventionnelle et augmentée par l’IA","employees2025":65,"employees2026":81,"growth":25,"hires":16,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"aqemia.com"},{"company":"Make","description":"Solutions aux grandes problématiques actuelles.","employees2025":540,"employees2026":675,"growth":25,"hires":135,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"make.org"},{"company":"Beev Fleet Manager","description":"L'expert de la mobilité électrique pour les entreprises","employees2025":44,"employees2026":55,"growth":25,"hires":11,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"beev.co"},{"company":"Acheel","description":"L’assurance simple et accessible","employees2025":80,"employees2026":100,"growth":25,"hires":20,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"acheel.com"},{"company":"Kanta","description":"Automatisation et conformité : le logiciel tout-en-un pour les experts-comptables","employees2025":60,"employees2026":75,"growth":25,"hires":15,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Normandie","website":"kanta.fr"},{"company":"Openairlines","description":"Accélérer la transition vers une aviation durable grâce à l'IA et au big data","employees2025":78,"employees2026":97,"growth":24,"hires":19,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Occitanie","website":"openairlines.com"},{"company":"Spliiit","description":"Partagez et réduisez le prix de vos abonnements, en toute sécurité","employees2025":17,"employees2026":21,"growth":24,"hires":4,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Nouvelle-Aquitaine","website":"spliiit.com"},{"company":"Tankyou","description":"Découvrez l’efficacité des flottes ravitaillées sur-mesure","employees2025":34,"employees2026":42,"growth":24,"hires":8,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"tankyou.com"},{"company":"Timeleft","description":"X","employees2025":70,"employees2026":87,"growth":24,"hires":17,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Île-de-France","website":"timeleft.com"},{"company":"Biomemory","description":"Construire un système de stockage de données ADN pour data centers","employees2025":58,"employees2026":72,"growth":24,"hires":14,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"biomemory-labs.com"},{"company":"Nperf Speed Test","description":"Test de débit - speed test : testez la vitesse de votre connexion internet (speedtest)","employees2025":25,"employees2026":31,"growth":24,"hires":6,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"nperf.com"},{"company":"Kerlog","description":"Logiciels de gestion et de traçabilité des déchets qui s'adaptent à votre métier","employees2025":17,"employees2026":21,"growth":24,"hires":4,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"kerlog.com"},{"company":"Fastcube","description":"Expert du pilotage de la performance et de la gestion de données.","employees2025":46,"employees2026":57,"growth":24,"hires":11,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"fastcube.fr"},{"company":"Dolead","description":"Propulsé par l’IA, exploitant des données CRM de qualité, du marketing haute intensité et un parcours utilisateur parfait pour livrer des leads prêts à vendre à un prix par lead aligné sur la qualité","employees2025":91,"employees2026":113,"growth":24,"hires":22,"sector":"MarTech (Ad-Tech, Marketing Automation, CRM, DMP & Analytics, SEO, ...)","headquarters":"Île-de-France","website":"dolead.com"},{"company":"Corsica Sole","description":"Déployer l'énergie solaire de manière fiable et durable","employees2025":132,"employees2026":164,"growth":24,"hires":32,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Provence-Alpes-Côte d’Azur","website":"corsicasole.com"},{"company":"Beyond Aero","description":"Libérer tout le potentiel grâce à l’hydrogène","employees2025":71,"employees2026":88,"growth":24,"hires":17,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Occitanie","website":"beyond-aero.com"},{"company":"Astraveus","description":"Grâce au développement de Lakhesys – la benchtop cell factory®, Astraveus ambitionne de rendre les thérapies cellulaires","employees2025":55,"employees2026":68,"growth":24,"hires":13,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"astraveus.com"},{"company":"Avant De Cliquer","description":"Cybersécurité centrée sur l’humain","employees2025":54,"employees2026":67,"growth":24,"hires":13,"sector":"DeepTech (IA, Cybersecurity, Cloud, ...)","headquarters":"Normandie","website":"avantdecliquer.com"},{"company":"Iadys","description":"Robotique et intelligence artificielle pour la dépollution de l’eau","employees2025":21,"employees2026":26,"growth":24,"hires":5,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Provence-Alpes-Côte d’Azur","website":"iadys.com"},{"company":"Legapass","description":"Legapass, l’allié technologique des notaires","employees2025":17,"employees2026":21,"growth":24,"hires":4,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Provence-Alpes-Côte d’Azur","website":"legapass.com"},{"company":"Shareid","description":"Le hub d’identité conforme à eIDAS 2.0","employees2025":21,"employees2026":26,"growth":24,"hires":5,"sector":"DeepTech (IA, Cybersecurity, Cloud, ...)","headquarters":"Île-de-France","website":"shareid.ai"},{"company":"Voodoo","description":"Divertir le monde avec des apps et jeux iconiques","employees2025":767,"employees2026":951,"growth":24,"hires":184,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Île-de-France","website":"voodoo.io"},{"company":"Gleamer","description":"Construire la plateforme IA unifiée la plus avancée pour la radiologie","employees2025":99,"employees2026":123,"growth":24,"hires":24,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"gleamer.ai"},{"company":"Gojob","description":"Agence d'intérim","employees2025":199,"employees2026":247,"growth":24,"hires":48,"sector":"DeepTech (IA, Cybersecurity, Cloud, ...)","headquarters":"Provence-Alpes-Côte d’Azur","website":"gojob.com"},{"company":"Corma","description":"Une plateforme pour valider l’accès","employees2025":29,"employees2026":36,"growth":24,"hires":7,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"corma.io"},{"company":"Nexpublica","description":"Le progrès, pour la société, par la technologie","employees2025":293,"employees2026":361,"growth":23,"hires":68,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"nexpublica.com"},{"company":"Mint Bikes","description":"Le spécialiste du vélo reconditionné.","employees2025":43,"employees2026":53,"growth":23,"hires":10,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Provence-Alpes-Côte d’Azur","website":"mint-bikes.com"},{"company":"Belacom","description":"Votre copilote en marketing automation","employees2025":35,"employees2026":43,"growth":23,"hires":8,"sector":"MarTech (Ad-Tech, Marketing Automation, CRM, DMP & Analytics, SEO, ...)","headquarters":"Île-de-France","website":"belacom.fr"},{"company":"Nw","description":"La transition énergétique accessible à tous","employees2025":247,"employees2026":304,"growth":23,"hires":57,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"nw-groupe.fr"},{"company":"Omnidoc","description":"Solution d'échanges entre soignants","employees2025":44,"employees2026":54,"growth":23,"hires":10,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Île-de-France","website":"omnidoc.fr"},{"company":"Toutapprendre","description":"CSE : offrez à vos salariés et leur famille une bibliothèque en ligne","employees2025":43,"employees2026":53,"growth":23,"hires":10,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"toutapprendre.com"},{"company":"Bsport","description":"Le meilleur logiciel pour gérer votre studio et le faire grandir","employees2025":201,"employees2026":247,"growth":23,"hires":46,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Île-de-France","website":"bsport.io"},{"company":"Just","description":"La mutuelle qui prend à la fois soin de votre santé et de votre budget","employees2025":66,"employees2026":81,"growth":23,"hires":15,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"just.fr"},{"company":"Tessan","description":"Faciliter l’accès des patients aux soins médicaux de qualité","employees2025":126,"employees2026":155,"growth":23,"hires":29,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"tessan.io"},{"company":"Animaj","description":"Entreprise média nouvelle génération créant des marques inspirantes pour enfants et familles, à l’échelle mondiale","employees2025":71,"employees2026":87,"growth":23,"hires":16,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Île-de-France","website":"animaj.com"},{"company":"Gedeon","description":"La retraite n'a jamais été aussi claire !","employees2025":30,"employees2026":37,"growth":23,"hires":7,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"gedeon.io"},{"company":"Seederal Technologies","description":"Électrifier l’agriculture","employees2025":27,"employees2026":33,"growth":22,"hires":6,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Bretagne","website":"seederal.fr"},{"company":"Moodwork","description":"Découvrez la seule plateforme de santé mentale au travail adaptée à votre secteur, vos métiers et vos problématiques.","employees2025":23,"employees2026":28,"growth":22,"hires":5,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"moodwork.com"},{"company":"Tryon","description":"La méthanisation locale et modulaire pour valoriser les biodéchets alimentaires","employees2025":23,"employees2026":28,"growth":22,"hires":5,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"tryon-environnement.com"},{"company":"La Conciergerie Solidaire","description":"Améliorer et faciliter le quotidien des salariés","employees2025":73,"employees2026":89,"growth":22,"hires":16,"sector":"Distribution & BtoC (RetailTech, e-commerce, Marketplace, Foodtech, Luxury, TravelTech, ...)","headquarters":"Nouvelle-Aquitaine","website":"conciergerie-solidaire.fr"},{"company":"Soeman","description":"Le CRM made in France et souverain leader du secteur industriel et négoce BtoB","employees2025":18,"employees2026":22,"growth":22,"hires":4,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"soeman.fr"},{"company":"Langa International","description":"Développe, construit et exploite des installations d’énergies renouvelables.","employees2025":69,"employees2026":84,"growth":22,"hires":15,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"langa-international.com"},{"company":"Vensolair","description":"Pour vos énergies renouvelables, passons à l’action !","employees2025":100,"employees2026":122,"growth":22,"hires":22,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Occitanie","website":"vensolair.fr"},{"company":"Bulldozer","description":"L’excellence marketing au service de vos ventes","employees2025":139,"employees2026":170,"growth":22,"hires":31,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"bulldozer-collective.com"},{"company":"Zefir","description":"Grâce à la Vente Collective et à l'IA , une vente immobilère jusqu'à 2x plus rapide.","employees2025":47,"employees2026":60,"growth":22,"hires":13,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"zefir.fr"},{"company":"Displayce","description":"Displayce, suite technologique pionnière de publicité DOOH, au service des marques, agences media et éditeurs, à l’échelle mondiale","employees2025":50,"employees2026":61,"growth":22,"hires":11,"sector":"MarTech (Ad-Tech, Marketing Automation, CRM, DMP & Analytics, SEO, ...)","headquarters":"Nouvelle-Aquitaine","website":"displayce.com"},{"company":"Ramify","description":"La performance et l’expertise d’une gestion institutionnelle, au service des patrimoines privés exigeants.","employees2025":20,"employees2026":24,"growth":22,"hires":4,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"ramify.fr"},{"company":"Rudder","description":"Automatisez et améliorez votre posture de sécurité IT avec Rudder","employees2025":18,"employees2026":22,"growth":22,"hires":4,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"rudder.io"},{"company":"Docoon","description":"Solutions de digitalisation des workflows et business process","employees2025":32,"employees2026":39,"growth":22,"hires":7,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Île-de-France","website":"docoon.com"},{"company":"Dayuse","description":"Réservez votre hôtel pour quelques heures en journée","employees2025":69,"employees2026":84,"growth":22,"hires":15,"sector":"Distribution & BtoC (RetailTech, e-commerce, Marketplace, Foodtech, Luxury, TravelTech, ...)","headquarters":"Île-de-France","website":"dayuse.com"},{"company":"Holis","description":"Plateforme interactive d'analyse de cycle de vie et d'éco-conception","employees2025":14,"employees2026":17,"growth":21,"hires":3,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"holis.earth"},{"company":"Orisha","description":"Éditeur européen de logiciels de gestion B2B","employees2025":1356,"employees2026":1646,"growth":21,"hires":290,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"orisha.com"},{"company":"Secret","description":"Le secret pour économiser gros sur le SaaS","employees2025":329,"employees2026":416,"growth":21,"hires":87,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"mail.joinsecret.com"},{"company":"Avel Robotics","description":"Conception et fabrication de pièces composites nouvelle génération","employees2025":24,"employees2026":29,"growth":21,"hires":5,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Bretagne","website":"avelrobotics.com"},{"company":"Upciti","description":"La donnée au service des villes et des collectivités","employees2025":34,"employees2026":41,"growth":21,"hires":7,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"upciti.com"},{"company":"Sezame","description":"Des expériences exclusives dans des hôtels de prestige","employees2025":19,"employees2026":23,"growth":21,"hires":4,"sector":"Distribution & BtoC (RetailTech, e-commerce, Marketplace, Foodtech, Luxury, TravelTech, ...)","headquarters":"Provence-Alpes-Côte d’Azur","website":"joinsezame.com"},{"company":"Kamino Retail","description":"La plateforme de monétisation retail media","employees2025":24,"employees2026":29,"growth":21,"hires":5,"sector":"MarTech (Ad-Tech, Marketing Automation, CRM, DMP & Analytics, SEO, ...)","headquarters":"Île-de-France","website":"kaminoretail.com"},{"company":"Ouidou","description":"Le développement logiciel au service de votre système d'information","employees2025":302,"employees2026":365,"growth":21,"hires":63,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"ouidou.fr"},{"company":"It Mates","description":"Du cloud à la data en passant par le digital workplace","employees2025":19,"employees2026":23,"growth":21,"hires":4,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Île-de-France","website":"itmates.fr"},{"company":"Illuin Technology","description":"Experts en IA et solutions numériques de pointe","employees2025":107,"employees2026":130,"growth":21,"hires":23,"sector":"DeepTech (IA, Cybersecurity, Cloud, ...)","headquarters":"Île-de-France","website":"illuin.tech"},{"company":"Cawl","description":"Expert du paiement et partenaire de votre croissance","employees2025":33,"employees2026":40,"growth":21,"hires":7,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"cawl.fr"},{"company":"Capital Fund Management","description":"Capital fund management CFM - global asset management. - CFM","employees2025":377,"employees2026":456,"growth":21,"hires":79,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"cfm.com"},{"company":"Diabolocom","description":"L'excellence de l'IA au service de chaque interaction client","employees2025":133,"employees2026":161,"growth":21,"hires":28,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"diabolocom.com"},{"company":"Faircraft","description":"La science des matériaux entre dans une nouvelle ère","employees2025":24,"employees2026":29,"growth":21,"hires":5,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"faircraft.bio"},{"company":"Cilcare","description":"Faire de l’audition une priorité","employees2025":53,"employees2026":64,"growth":21,"hires":11,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Occitanie","website":"cilcare.com"},{"company":"Stych","description":"Le plus grand réseau d’auto-écoles","employees2025":198,"employees2026":239,"growth":21,"hires":41,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"stych.fr"},{"company":"Kiln","description":"Démocratiser la création de valeur dans les actifs digitaux","employees2025":125,"employees2026":151,"growth":21,"hires":26,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"kiln.fi"},{"company":"Welyft","description":"L'agence data-marketing qui booste le ROI de vos parcours clients","employees2025":14,"employees2026":17,"growth":21,"hires":3,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"welyft.com"},{"company":"Octomine","description":"La plateforme de sondage collaborateurs qui répond à vos besoins","employees2025":12,"employees2026":15,"growth":21,"hires":3,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"octomine.com"},{"company":"Rzilient","description":"L'expertise IT au service de votre innovation","employees2025":18,"employees2026":22,"growth":21,"hires":4,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"rzilient.club"},{"company":"Rofim","description":"Plateforme de télémédecine qui centralise la téléexpertise, la téléconsultation et les RCP, pour améliorer la coordination médicale.","employees2025":42,"employees2026":51,"growth":21,"hires":9,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Provence-Alpes-Côte d’Azur","website":"rofim.doctor"},{"company":"Basikon","description":"Le logiciel de prêt et crédit-bail intelligent et 100% API","employees2025":24,"employees2026":29,"growth":21,"hires":5,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"basikon.io"},{"company":"Listen Leon","description":"La reconnaissance pour tous et par tous","employees2025":15,"employees2026":18,"growth":20,"hires":3,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Provence-Alpes-Côte d’Azur","website":"listenleon.com"},{"company":"Quantilia","description":"Solutions sur-mesure de data & reporting","employees2025":10,"employees2026":12,"growth":20,"hires":2,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Provence-Alpes-Côte d’Azur","website":"quantilia.com"},{"company":"Fisio","description":"L’outil ultime pour créer votre CV en ligne","employees2025":46,"employees2026":55,"growth":20,"hires":9,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"fisio.fr"},{"company":"Lore Finance","description":"Immobilier facilité","employees2025":46,"employees2026":55,"growth":20,"hires":9,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Nouvelle-Aquitaine","website":"lore-finance.com"},{"company":"Rumo","description":"Recommandations personnalisées pour plateformes de divertissement","employees2025":35,"employees2026":42,"growth":20,"hires":7,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"rumo.co"},{"company":"Steto","description":"Application qui vous aide à rester maître de votre diabète","employees2025":10,"employees2026":12,"growth":20,"hires":2,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"steto.care"},{"company":"Beev","description":"L'expert de la mobilité électrique pour les entreprises","employees2025":44,"employees2026":53,"growth":20,"hires":9,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"beev.co"},{"company":"Linxea","description":"Assurance vie, PER et solutions d'épargne à frais réduits","employees2025":82,"employees2026":98,"growth":20,"hires":16,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"linxea.com"},{"company":"Hprobe","description":"Tester wafer-level Hprobe : accélérer le développement et la production d’appareils magnétiques","employees2025":20,"employees2026":24,"growth":20,"hires":4,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"hprobe.com"},{"company":"Ecojoko","description":"Mesurez et optimisez votre consommation d'électricité","employees2025":25,"employees2026":30,"growth":20,"hires":5,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"ecojoko.com"},{"company":"C12","description":"Mener le prochain saut matériaux en informatique quantique","employees2025":59,"employees2026":71,"growth":20,"hires":12,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"c12qe.com"},{"company":"Prozon","description":"Plateforme d'achat pour professionnels","employees2025":51,"employees2026":61,"growth":20,"hires":10,"sector":"Distribution & BtoC (RetailTech, e-commerce, Marketplace, Foodtech, Luxury, TravelTech, ...)","headquarters":"Provence-Alpes-Côte d’Azur","website":"prozon.com"},{"company":"Lixo","description":"La solution pionnière d’analyse de données pour la collecte des déchets","employees2025":56,"employees2026":67,"growth":20,"hires":11,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"lixo.tech"},{"company":"Ohm Energie","description":"Fournisseur d’éco-énergie","employees2025":178,"employees2026":213,"growth":20,"hires":36,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"ohm-energie.com"},{"company":"Girasole Energies","description":"Énergie photovoltaïque au service de votre activité","employees2025":74,"employees2026":89,"growth":20,"hires":15,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"girasole-energies.com"},{"company":"Fraktion","description":"Optimiser et sécuriser la distribution de vos actifs à vos investisseurs","employees2025":10,"employees2026":12,"growth":20,"hires":2,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"fraktion.fr"},{"company":"Cominty","description":"IA agentique pour le travail","employees2025":15,"employees2026":18,"growth":20,"hires":3,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"cominty.ai"},{"company":"Ideuzo","description":"L'agence de communication RH at_work","employees2025":66,"employees2026":79,"growth":20,"hires":13,"sector":"MarTech (Ad-Tech, Marketing Automation, CRM, DMP & Analytics, SEO, ...)","headquarters":"Île-de-France","website":"ideuzo.com"},{"company":"N2Jsoft","description":"Notes de frais • cartes de paiement • factures fournisseurs","employees2025":153,"employees2026":184,"growth":20,"hires":31,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"n2f.com"},{"company":"Unseenlabs","description":"Détection RF depuis l’espace","employees2025":77,"employees2026":92,"growth":20,"hires":15,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Bretagne","website":"unseenlabs.fr"},{"company":"CapCar","description":"Achetez une voiture d'occasion en toute confiance","employees2025":10,"employees2026":12,"growth":20,"hires":2,"sector":"Distribution & BtoC (RetailTech, e-commerce, Marketplace, Foodtech, Luxury, TravelTech, ...)","headquarters":"Île-de-France","website":"capcar.fr"},{"company":"Locuta","description":"Automatisez l’expérience client conversationnelle à grande échelle","employees2025":10,"employees2026":12,"growth":20,"hires":2,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Nouvelle-Aquitaine","website":"locuta.co"},{"company":"Therasonic","description":"Permettre la délivrance de médicaments vers le cerveau","employees2025":10,"employees2026":12,"growth":20,"hires":2,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"therasonic.fr"},{"company":"Lempire","description":"Lempire est une suite de SaaS qui aide les PME à générer du revenu","employees2025":10,"employees2026":12,"growth":20,"hires":2,"sector":"Distribution & BtoC (RetailTech, e-commerce, Marketplace, Foodtech, Luxury, TravelTech, ...)","headquarters":"Île-de-France","website":"lempire.com"},{"company":"Chapsvision","description":"Votre parcours IA agentique","employees2025":238,"employees2026":284,"growth":19,"hires":46,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"chapsvision.com"},{"company":"Acwa Robotics","description":"Solutions robotiques pour contrôler votre réseau d’eau potable","employees2025":21,"employees2026":25,"growth":19,"hires":4,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Corse","website":"acwa-robotics.com"},{"company":"Otaree","description":"Logiciel / plateforme de commercialisation de l'immobilier neuf pour professionnels","employees2025":36,"employees2026":43,"growth":19,"hires":7,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"otaree.com"},{"company":"Eshard","description":"Solutions avancées de cybersécurité","employees2025":42,"employees2026":50,"growth":19,"hires":8,"sector":"DeepTech (IA, Cybersecurity, Cloud, ...)","headquarters":"Nouvelle-Aquitaine","website":"eshard.com"},{"company":"Diamfab","description":"Libérez la puissance du diamant","employees2025":31,"employees2026":37,"growth":19,"hires":6,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"diamfab.com"},{"company":"Inuse","description":"Réinventez l’industrie intelligente.","employees2025":16,"employees2026":19,"growth":19,"hires":3,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"inuse.eu"},{"company":"Formality","description":"La vision 360° de vos actifs grâce à l'IA","employees2025":21,"employees2026":25,"growth":19,"hires":4,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"formality.com"},{"company":"Ecoat","description":"Solutions pour réduire l’empreinte carbone de vos revêtements et peintures.","employees2025":53,"employees2026":63,"growth":19,"hires":10,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Provence-Alpes-Côte d’Azur","website":"ecoat.fr"},{"company":"Entalpic","description":"Accélérer la R&D en chimie & matériaux","employees2025":27,"employees2026":32,"growth":19,"hires":5,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"entalpic.ai"},{"company":"Himydata","description":"Votre data lakehouse nouvelle génération","employees2025":21,"employees2026":25,"growth":19,"hires":4,"sector":"DeepTech (IA, Cybersecurity, Cloud, ...)","headquarters":"Provence-Alpes-Côte d’Azur","website":"himydata.com"},{"company":"Deuxiemeavis","description":"Deuxième avis médical auprès d’un médecin spécialiste de votre maladie en 7 jours","employees2025":31,"employees2026":37,"growth":19,"hires":6,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"deuxiemeavis.fr"},{"company":"Latitude","description":"Smallsats : tracez votre trajectoire vers l’orbite","employees2025":200,"employees2026":238,"growth":19,"hires":38,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Grand Est","website":"latitude.eu"},{"company":"Million Victories","description":"Affichez votre supériorité tactique dans notre RTS en temps réel sans timers !","employees2025":47,"employees2026":56,"growth":19,"hires":9,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"millionvictories.com"},{"company":"Oneflash","description":"La recharge téléphone en libre-service","employees2025":48,"employees2026":57,"growth":19,"hires":9,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"oneflash.fr"},{"company":"Inetum Software","description":"Éditeur français de logiciels et leader du secteur public","employees2025":429,"employees2026":510,"growth":19,"hires":81,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"inetumsoftware.com"},{"company":"Abraxio","description":"Plateforme unique tout-en-un dédiée au management 360° de la DSI","employees2025":32,"employees2026":38,"growth":19,"hires":6,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"abraxio.com"},{"company":"Robeauté","description":"Microrobots neurochirurgicaux","employees2025":32,"employees2026":38,"growth":19,"hires":6,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"robeaute.com"},{"company":"Wandercraft","description":"Robot au service de la mobilité","employees2025":134,"employees2026":160,"growth":19,"hires":26,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"wandercraft.eu"},{"company":"Arnest","description":"Services d’ingénierie et de management de projets pour le secteur de l’énergie.","employees2025":83,"employees2026":99,"growth":19,"hires":16,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"arnest-engineering.com"},{"company":"Skello","description":"Solution RH intelligente des équipes de terrain.","employees2025":328,"employees2026":390,"growth":19,"hires":62,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"skello.io"},{"company":"Hubency","description":"Recycler valoriser préserver","employees2025":85,"employees2026":101,"growth":19,"hires":16,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"hubency.com"},{"company":"Onestock","description":"Gestion des commandes avec le spécialiste de l’order management system.","employees2025":82,"employees2026":97,"growth":18,"hires":15,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Occitanie","website":"onestock-retail.com"},{"company":"Cafeyn","description":"Streaming de titres de presse","employees2025":110,"employees2026":130,"growth":18,"hires":20,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Île-de-France","website":"cafeyn.co"},{"company":"Fredo","description":"Solution simple de vélos partagés avec cadenas connectés","employees2025":17,"employees2026":20,"growth":18,"hires":3,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"fredo.fr"},{"company":"Underdog","description":"Électroménager reconditionné","employees2025":45,"employees2026":53,"growth":18,"hires":8,"sector":"Distribution & BtoC (RetailTech, e-commerce, Marketplace, Foodtech, Luxury, TravelTech, ...)","headquarters":"Pays de la Loire","website":"underdog.shop"},{"company":"La Brigade De Véro","description":"Livraison de repas diététiques cuisinés - la brigade de Véro","employees2025":40,"employees2026":47,"growth":18,"hires":7,"sector":"Distribution & BtoC (RetailTech, e-commerce, Marketplace, Foodtech, Luxury, TravelTech, ...)","headquarters":"Occitanie","website":"labrigadedevero.com"},{"company":"Flexifleet","description":"Solutions clés en main pour les chauffeurs VTC","employees2025":38,"employees2026":45,"growth":18,"hires":7,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"flexifleet.fr"},{"company":"Ypso-Facto","description":"Développer, évaluer et optimiser des procédés (bio)chimiques","employees2025":22,"employees2026":26,"growth":18,"hires":4,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"ypso-facto.com"},{"company":"Neovision","description":"IA sur mesure, open-source, scalable.","employees2025":34,"employees2026":40,"growth":18,"hires":6,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"neovision.fr"},{"company":"Memority","description":"Solution IAM : identity and access management | memority","employees2025":71,"employees2026":84,"growth":18,"hires":13,"sector":"DeepTech (IA, Cybersecurity, Cloud, ...)","headquarters":"Île-de-France","website":"memority.com"},{"company":"Faibrik","description":"Logiciel de service client construit autour de l’IA","employees2025":16,"employees2026":19,"growth":18,"hires":3,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"faibrik.com"},{"company":"Breega","description":"Prédictions du secteur","employees2025":45,"employees2026":53,"growth":18,"hires":8,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"breega.com"},{"company":"Bluecime","description":"Solutions innovantes en traitement d'images","employees2025":11,"employees2026":13,"growth":18,"hires":2,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"bluecime.com"},{"company":"Ava2I","description":"Ingénierie & innovation — cloud • data • IA","employees2025":13,"employees2026":15,"growth":18,"hires":2,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"ava2i.com"},{"company":"Via Sana","description":"Cabinet médical","employees2025":49,"employees2026":58,"growth":18,"hires":9,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"centreviasana.com"},{"company":"Ekonsilio","description":"Centralisez vos conversations, automatisez les réponses simples et offrez une expérience client fluide sur tous vos canaux","employees2025":99,"employees2026":117,"growth":18,"hires":18,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Pays de la Loire","website":"ekonsilio.com"},{"company":"Evertrust","description":"Éliminez les pannes de certificats et réduisez les coûts PKI.","employees2025":45,"employees2026":53,"growth":18,"hires":8,"sector":"DeepTech (IA, Cybersecurity, Cloud, ...)","headquarters":"Île-de-France","website":"evertrust.fr"},{"company":"Quandela","description":"Propulsé par le quantique, renforcé par Quandela","employees2025":110,"employees2026":130,"growth":18,"hires":20,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"quandela.com"},{"company":"Matera","description":"Gestion immobilière.","employees2025":308,"employees2026":363,"growth":18,"hires":55,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"matera.eu"},{"company":"Pytheas Capital","description":"Pytheas Capital propose la plateforme technologique treso2","employees2025":34,"employees2026":40,"growth":18,"hires":6,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"pytheascapital.com"},{"company":"Devensys Cybersecurity","description":"Experts en cybersécurité","employees2025":79,"employees2026":93,"growth":18,"hires":14,"sector":"DeepTech (IA, Cybersecurity, Cloud, ...)","headquarters":"Occitanie","website":"devensys.com"},{"company":"Treso2 Par Pytheas Capital","description":"Plateforme agréée qui automatise le traitement de vos factures","employees2025":34,"employees2026":40,"growth":18,"hires":6,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"pytheascapital.com"},{"company":"Weefin","description":"Plateforme qui permet aux investisseurs professionnels de regagner en souveraineté sur leurs données ESG et de maximiser leur impact.","employees2025":99,"employees2026":117,"growth":18,"hires":18,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Île-de-France","website":"wee-fin.com"},{"company":"Dattak","description":"Assurance cyber proactive qui allie services de cybersécurité","employees2025":35,"employees2026":41,"growth":18,"hires":6,"sector":"DeepTech (IA, Cybersecurity, Cloud, ...)","headquarters":"Île-de-France","website":"dattak.io"},{"company":"Artelys","description":"Programmation mathématique et IA au service de l’efficacité","employees2025":114,"employees2026":134,"growth":18,"hires":20,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"artelys.com"},{"company":"Unipile","description":"API unifiée pour messagerie, email & agenda","employees2025":12,"employees2026":14,"growth":17,"hires":2,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"unipile.com"},{"company":"Brenus Pharma","description":"Faire passer le système immunitaire un cran devant le cancer","employees2025":18,"employees2026":21,"growth":17,"hires":3,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"brenus-pharma.com"},{"company":"Otami","description":"Solution pour simplifier vos achats, vos marges et votre production","employees2025":18,"employees2026":21,"growth":17,"hires":3,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"otami.fr"},{"company":"Singulart","description":"Plateforme d'oeuvre d'art","employees2025":226,"employees2026":264,"growth":17,"hires":38,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Île-de-France","website":"singulart.com"},{"company":"Nawah","description":"Matériaux carbone nano-ingéniérés","employees2025":52,"employees2026":61,"growth":17,"hires":9,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Provence-Alpes-Côte d’Azur","website":"nawatechnologies.com"},{"company":"Fleeti","description":"La gestion intelligente de vos véhicules et équipements","employees2025":72,"employees2026":84,"growth":17,"hires":12,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Nouvelle-Aquitaine","website":"fleeti.co"},{"company":"Newzik","description":"Le meilleur de la technologie au service de vos partitions","employees2025":23,"employees2026":27,"growth":17,"hires":4,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"newzik.com"},{"company":"Gsf Astree","description":"Propreté et services","employees2025":18,"employees2026":21,"growth":17,"hires":3,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"gsf.fr"},{"company":"En Voiture Simone","description":"L’auto-école, sans les galères","employees2025":121,"employees2026":141,"growth":17,"hires":20,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"envoituresimone.com"},{"company":"Verkor","description":"Des batteries. Maintenant. Pour le futur.","employees2025":794,"employees2026":929,"growth":17,"hires":135,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"verkor.com"},{"company":"Skyloud","description":"Nos experts DevOps vous accompagnent pour construire, optimiser et infogérer votre infrastructure","employees2025":12,"employees2026":14,"growth":17,"hires":2,"sector":"DeepTech (IA, Cybersecurity, Cloud, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"skyloud.fr"},{"company":"Sogescot","description":"Sogescot, partenaire de la transformation numérique et durable des cabinets d'expertise comptable.","employees2025":23,"employees2026":27,"growth":17,"hires":4,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Bretagne","website":"sogescot.com"},{"company":"Growth Room","description":"Agence de growth marketing efficace et vraiment performante.","employees2025":46,"employees2026":54,"growth":17,"hires":8,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"growthroom.co"},{"company":"Eben Home","description":"Le mobilier pour les professionnels et passionnés de design","employees2025":18,"employees2026":21,"growth":17,"hires":3,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Île-de-France","website":"ebenhome.co"},{"company":"Gravithy","description":"Fer durable. Acier plus vert.","employees2025":35,"employees2026":41,"growth":17,"hires":6,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Provence-Alpes-Côte d’Azur","website":"gravitHy.eu"},{"company":"Linkbycar","description":"Révolutionner la gestion de flotte de véhicules avec des données en temps réel.","employees2025":12,"employees2026":14,"growth":17,"hires":2,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"linkbycar.com"},{"company":"La Belle Vie","description":"Toutes vos courses livrées aujourd'hui","employees2025":165,"employees2026":193,"growth":17,"hires":28,"sector":"Distribution & BtoC (RetailTech, e-commerce, Marketplace, Foodtech, Luxury, TravelTech, ...)","headquarters":"Île-de-France","website":"labellevie.com"},{"company":"Homa","description":"Des outils qui aident les créateurs de jeux.","employees2025":682,"employees2026":798,"growth":17,"hires":116,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Île-de-France","website":"homagames.com"},{"company":"Mym","description":"Suis tes personnalités préférées et découvre des contenus exclusifs.","employees2025":397,"employees2026":465,"growth":17,"hires":68,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Île-de-France","website":"mym.fans"},{"company":"Ferway","description":"Pilotez votre performance RH et finance","employees2025":15,"employees2026":18,"growth":17,"hires":3,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"spartes.fr"},{"company":"La Forge","description":"Une communauté d'experts pour créer votre produit IA","employees2025":15,"employees2026":18,"growth":17,"hires":3,"sector":"DeepTech (IA, Cybersecurity, Cloud, ...)","headquarters":"Île-de-France","website":"la-forge.ai"},{"company":"Wiremind","description":"Optimisez les opérations passagers, cargo et divertissement","employees2025":112,"employees2026":131,"growth":17,"hires":19,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"wiremind.io"},{"company":"Weglot","description":"La façon la plus simple de traduire un site web","employees2025":53,"employees2026":62,"growth":17,"hires":9,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"weglot.com"},{"company":"Keon","description":"Transformez vos biodéchets en énergie verte !","employees2025":55,"employees2026":64,"growth":16,"hires":9,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"keon-group.com"},{"company":"Poxel","description":"Poxel est une biopharma en phase clinique développant des traitements innovants pour maladies chroniques graves (NASH) et troubles rares.","employees2025":25,"employees2026":29,"growth":16,"hires":4,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"poxelpharma.com"},{"company":"Alvest","description":"Solutions pour l’industrie aéronautique.","employees2025":161,"employees2026":187,"growth":16,"hires":26,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"alvest.fr"},{"company":"Wattalps","description":"Batteries haute performance, abordables pour votre usage.","employees2025":19,"employees2026":22,"growth":16,"hires":3,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"wattalps.com"},{"company":"Imagine Human","description":"Réseau d’entrepreneurs","employees2025":19,"employees2026":22,"growth":16,"hires":3,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"imagine-human.com"},{"company":"Gamned!","description":"Agence programmatique fondée sur l’innovation, l’audace et l’expertise","employees2025":18,"employees2026":21,"growth":16,"hires":3,"sector":"MarTech (Ad-Tech, Marketing Automation, CRM, DMP & Analytics, SEO, ...)","headquarters":"Île-de-France","website":"gamned.com"},{"company":"Contexte","description":"Information approfondie.","employees2025":134,"employees2026":156,"growth":16,"hires":22,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Île-de-France","website":"contexte.com"},{"company":"Yavin","description":"Bien plus qu'un terminal de paiement","employees2025":58,"employees2026":67,"growth":16,"hires":9,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"yavin.com"},{"company":"Kobi","description":"L'application qui vous aide avec vos frais sportifs","employees2025":32,"employees2026":37,"growth":16,"hires":5,"sector":"DeepTech (IA, Cybersecurity, Cloud, ...)","headquarters":"Hauts-de-France","website":"kobisport.eu"},{"company":"Op3Ft","description":"Le site web de l'OP3FT, l'organisation pour la promotion, la protection et le progrès de la technologie Frogans","employees2025":19,"employees2026":22,"growth":16,"hires":3,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"op3ft.org"},{"company":"Mhcomm - Connecting Home Healthcare","description":"Créateur de liens pour la qualité des soins au domicile","employees2025":31,"employees2026":36,"growth":16,"hires":5,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Occitanie","website":"mhcomm.fr"},{"company":"Implicity","description":"Gardez votre cœur connecté à votre équipe médicale sans quitter votre domicile.","employees2025":85,"employees2026":99,"growth":16,"hires":14,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"implicity.com"},{"company":"Goodies Pub","description":"Goodies personnalisés, textiles personnalisés et cadeaux personnalisés | personaliz (ex-goodies pub)","employees2025":38,"employees2026":44,"growth":16,"hires":6,"sector":"MarTech (Ad-Tech, Marketing Automation, CRM, DMP & Analytics, SEO, ...)","headquarters":"Nouvelle-Aquitaine","website":"goodiespub.fr"},{"company":"Callbell","description":"Vendez et aidez vos clients sur WhatsApp, Messenger, Instagram et Telegram via une plateforme multi-agents","employees2025":37,"employees2026":43,"growth":16,"hires":6,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"callbell.eu"},{"company":"Axeal","description":"L’expertise qui connecte les talents aux industries exigeantes","employees2025":32,"employees2026":37,"growth":16,"hires":5,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"heverett.com"},{"company":"Anybuddy","description":"Réserve un terrain à la carte, à la cool !","employees2025":43,"employees2026":50,"growth":16,"hires":7,"sector":"Distribution & BtoC (RetailTech, e-commerce, Marketplace, Foodtech, Luxury, TravelTech, ...)","headquarters":"Hauts-de-France","website":"anybuddyapp.com"},{"company":"Factem","description":"Leader en accessoires audio : Factem conçoit et fabrique des équipements électroacoustiques personnalisables, adaptés à votre environnement","employees2025":56,"employees2026":65,"growth":16,"hires":9,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Normandie","website":"factem.com"},{"company":"Kikleo","description":"Acteur de référence pour réduire vos pertes grâce à une technologie innovante d’analyse du gaspillage alimentaire","employees2025":25,"employees2026":29,"growth":16,"hires":4,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"kikleo.com"},{"company":"La Fabrik À Id","description":"Spécialisée dans les solutions digitales clé en main pour le secteur automobile","employees2025":31,"employees2026":36,"growth":16,"hires":5,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Grand Est","website":"lfaid.fr"},{"company":"Skyvisor","description":"Inspections internes par drone et gestion des actifs pour les parcs éoliens et solaires","employees2025":19,"employees2026":22,"growth":16,"hires":3,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"skyvisor.eu"},{"company":"Sitaci","description":"Sitaci est éditeur de la solution WMS: Ego Supply Chain Management","employees2025":49,"employees2026":57,"growth":16,"hires":8,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Pays de la Loire","website":"sitaci.fr"},{"company":"Keysom","description":"Ne laissez pas les limites processeur brider votre design. Construisez un processeur sur-mesure adapté à vos besoins.","employees2025":19,"employees2026":22,"growth":16,"hires":3,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Nouvelle-Aquitaine","website":"keysom.io"},{"company":"Citio","description":"Citio accompagne autorités organisatrices et opérateurs de mobilité à optimiser leurs offres pour une mobilité durable, économique et inclusive","employees2025":25,"employees2026":29,"growth":16,"hires":4,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"cit.io"},{"company":"Onoff","description":"Votre second numéro avec une application","employees2025":101,"employees2026":120,"growth":16,"hires":19,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"onoff.app"},{"company":"Astrée Software","description":"Éditeur et intégrateur de logiciel MES","employees2025":100,"employees2026":115,"growth":15,"hires":15,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"astree-software.fr"},{"company":"Symfony","description":"Construisez en confiance, à toute échelle","employees2025":13,"employees2026":15,"growth":15,"hires":2,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"symfony.com"},{"company":"Railwai","description":"Une plateforme globale dédiée à la valorisation et au croisement des données dans le domaine du transport guidé","employees2025":13,"employees2026":15,"growth":15,"hires":2,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Occitanie","website":"railwai.com"},{"company":"Slite","description":"Évitez la courbe d’apprentissage : Slite offre une documentation superbe, une adoption sans effort et une recherche IA dès le premier jour.","employees2025":34,"employees2026":39,"growth":15,"hires":5,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"slite.com"},{"company":"Coave Therapeutics","description":"Coave Therapeutics dévoile un programme de thérapie génique leader pour maladies vasculaires rétiniennes, via un vecteur first-in-class pour délivrance suprachoroïdienne","employees2025":40,"employees2026":46,"growth":15,"hires":6,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"coavetx.com"},{"company":"E-Commerce Nation","description":"Gardez une longueur d’avance avec les dernières actualités, tendances et stratégies en matière de e-commerce","employees2025":625,"employees2026":719,"growth":15,"hires":94,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Normandie","website":"ecommerce-nation.fr"},{"company":"Susu","description":"Offrez le meilleur accès aux soins de santé à vos familles en Afrique","employees2025":590,"employees2026":679,"growth":15,"hires":89,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"susu.fr"},{"company":"Rematch","description":"Avec l’app Rematch, immortalise les meilleurs moments de sport amateur et les vidéos highlights","employees2025":68,"employees2026":78,"growth":15,"hires":10,"sector":"Distribution & BtoC (RetailTech, e-commerce, Marketplace, Foodtech, Luxury, TravelTech, ...)","headquarters":"Nouvelle-Aquitaine","website":"rematch.tv"},{"company":"Libriciel Scop","description":"Les applications libriciel SCOP répondent aux enjeux de dématérialisation du secteur public","employees2025":55,"employees2026":63,"growth":15,"hires":8,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Occitanie","website":"libriciel.fr"},{"company":"Feed.","description":"La nutrition développée pour atteindre vos objectifs.","employees2025":141,"employees2026":162,"growth":15,"hires":21,"sector":"Distribution & BtoC (RetailTech, e-commerce, Marketplace, Foodtech, Luxury, TravelTech, ...)","headquarters":"Île-de-France","website":"feed.co"},{"company":"Lockself","description":"La suite cyber pour sécuriser vos mots de passe et fichiers","employees2025":54,"employees2026":62,"growth":15,"hires":8,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"lockself.com"},{"company":"Apl Data Center","description":"APL, expert en data centers","employees2025":208,"employees2026":239,"growth":15,"hires":31,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"apl-datacenter.com"},{"company":"Pytheas Capital - Treso2","description":"La plateforme agréée qui automatise le traitement de vos factures","employees2025":34,"employees2026":39,"growth":15,"hires":5,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"pytheascapital.com"},{"company":"Dealinka","description":"Dealinka redonne une seconde vie à vos invendus !","employees2025":52,"employees2026":60,"growth":15,"hires":8,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"dealinka.fr"},{"company":"Socianova","description":"Dossier usager informatisé pour le social et le médico-social","employees2025":61,"employees2026":70,"growth":15,"hires":9,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"socianova.com"},{"company":"Dotfile","description":"KYB Solution | vérification business de bout en bout","employees2025":27,"employees2026":31,"growth":15,"hires":4,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"dotfile.com"},{"company":"Isybuy","description":"Logiciel SI achats","employees2025":33,"employees2026":38,"growth":15,"hires":5,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Occitanie","website":"isybuy.com"},{"company":"Idakto","description":"La plateforme ouverte de l’identité digitale","employees2025":53,"employees2026":61,"growth":15,"hires":8,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"idakto.com"},{"company":"Pigment (Duplicit)","description":"Plateforme de planification intégrée avec IA agentique","employees2025":544,"employees2026":626,"growth":15,"hires":82,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"pigment.com"},{"company":"Clubfunding","description":"La plateforme dédiée à l’investissement privé","employees2025":52,"employees2026":60,"growth":15,"hires":8,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"clubfunding.fr"},{"company":"Alma","description":"La solution de paiement en plusieurs fois","employees2025":525,"employees2026":604,"growth":15,"hires":79,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"getalma.eu"},{"company":"Stockly","description":"Connecter les stocks pour un e-commerce sans limites","employees2025":98,"employees2026":113,"growth":15,"hires":15,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"stockly.ai"},{"company":"Sis Id","description":"Sécurisez vos paiements et maîtrisez le risque de fraude au virement","employees2025":75,"employees2026":86,"growth":15,"hires":11,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"sis-id.com"},{"company":"Comptastar","description":"Le logiciel de gestion pour les experts-comptables","employees2025":130,"employees2026":150,"growth":15,"hires":20,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"comptastar.fr"},{"company":"Nomadia","description":"Solutions logicielles pour la gestion des temps et des activités","employees2025":108,"employees2026":124,"growth":15,"hires":16,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"nomadia-group.com"},{"company":"Vusiongroup","description":"Dévoiler la foundation IA native pour la prochaine décennie du retail","employees2025":183,"employees2026":210,"growth":15,"hires":27,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"vusion.com"},{"company":"Adikteev","description":"DSP aidant les apps mobiles à réengager leurs utilisateurs via le retargeting et à acquérir de nouveaux utilisateurs grâce à la CTV","employees2025":75,"employees2026":86,"growth":15,"hires":11,"sector":"MarTech (Ad-Tech, Marketing Automation, CRM, DMP & Analytics, SEO, ...)","headquarters":"Île-de-France","website":"adikteev.com"},{"company":"Lucca","description":"15 logiciels RH et administratifs : la meilleure solution SIRH par Lucca","employees2025":357,"employees2026":409,"growth":15,"hires":52,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"lucca.fr"},{"company":"Kshuttle","description":"La plateforme qui répond aux défis croissants des réglementations financières et de durabilité","employees2025":91,"employees2026":104,"growth":14,"hires":13,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"kshuttle.io"},{"company":"Kelio","description":"Logiciel RH : gestion des temps & contrôle d’accès","employees2025":184,"employees2026":210,"growth":14,"hires":26,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Pays de la Loire","website":"kelio.com"},{"company":"Batch","description":"Customer engagement platform (CEP) pour les équipes CRM","employees2025":106,"employees2026":121,"growth":14,"hires":15,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"batch.com"},{"company":"Avis-Locataire","description":"Solutions numériques de communication, d'écoute client, de prise de rendez-vous et de contrôle sur site, pour les gestionnaires de biens immobiliers.","employees2025":22,"employees2026":25,"growth":14,"hires":3,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"avis-locataire.com"},{"company":"Tohero","description":"Développement d'applications web, e-commerce et mobile","employees2025":29,"employees2026":33,"growth":14,"hires":4,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Occitanie","website":"tohero.fr"},{"company":"Diapason","description":"Solution de gestion de trésorerie qui transforme votre pilotage financier en levier de performance.","employees2025":92,"employees2026":105,"growth":14,"hires":13,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"mydiapason.com"},{"company":"Waat","description":"Pour une mobilité durable et raisonnée et une planète en bonne santé.","employees2025":239,"employees2026":273,"growth":14,"hires":34,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"waat.fr"},{"company":"N2F","description":"Solutions performantes et intuitives, avec un accompagnement personnalisé et un service client réactif.","employees2025":57,"employees2026":65,"growth":14,"hires":8,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"n2f.com"},{"company":"Sopht","description":"Sopht, la solution green ITops pour décarboner votre IT","employees2025":36,"employees2026":41,"growth":14,"hires":5,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"sopht.com"},{"company":"Epresspack","description":"Accompagner la digitalisation des éq","employees2025":37,"employees2026":42,"growth":14,"hires":5,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"epresspack.com"},{"company":"Dougs Compta","description":"Expert-comptable en ligne","employees2025":299,"employees2026":341,"growth":14,"hires":42,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"dougs.fr"},{"company":"Sillage","description":"Faites croître votre revenu plus vite avec des agents de signal","employees2025":22,"employees2026":25,"growth":14,"hires":3,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"getsillage.com"},{"company":"900.Care","description":"Arrêtez d'acheter de l'eau.","employees2025":74,"employees2026":84,"growth":14,"hires":10,"sector":"Distribution & BtoC (RetailTech, e-commerce, Marketplace, Foodtech, Luxury, TravelTech, ...)","headquarters":"Île-de-France","website":"900.care"},{"company":"Omi","description":"Studio photo virtuel grâce à l'IA 3D","employees2025":106,"employees2026":121,"growth":14,"hires":15,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"omi.so"},{"company":"Retency","description":"Retency conçoit et déploie des procédés algorithmiques d'anonymisation","employees2025":106,"employees2026":121,"growth":14,"hires":15,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"retency.com"},{"company":"Maiaspace","description":"Concevoir, fabriquer, opérer et commercialiser des solutions compétitives et durables pour le lancement spatial et la mobilité.","employees2025":176,"employees2026":201,"growth":14,"hires":25,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"maia-space.com"},{"company":"Edda (Kushim France)","description":"Le logiciel le plus avancé pour le venture capital et le private equity","employees2025":35,"employees2026":40,"growth":14,"hires":5,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"edda.co"},{"company":"Hydratis","description":"Pastilles électrolytes Hydratis pour créer ta boisson – Hydratis","employees2025":28,"employees2026":32,"growth":14,"hires":4,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"hydratis.co"},{"company":"Optera","description":"À vos côtés pour relever vos défis énergétiques !","employees2025":14,"employees2026":16,"growth":14,"hires":2,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Nouvelle-Aquitaine","website":"optera.fr"},{"company":"Giskard","description":"Plateforme de tests automatisés pour sécuriser en continu les agents LLM, évitant hallucinations et problèmes de sécurité en production.","employees2025":22,"employees2026":25,"growth":14,"hires":3,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"giskard.ai"},{"company":"Spimed-Ai","description":"Analyse CCTA par IA : plus intelligente, plus rapide, qui sauve des vies","employees2025":21,"employees2026":24,"growth":14,"hires":3,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Île-de-France","website":"spimed-ai.com"},{"company":"Ebg","description":"Rejoignez la communauté qui réunit décideurs et experts de l'innovation pour partager, apprendre et faire avancer vos projets","employees2025":269,"employees2026":307,"growth":14,"hires":38,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"ebg.net"},{"company":"Worklife","description":"Boostez votre stratégie RH grâce aux avantages salariés.","employees2025":93,"employees2026":106,"growth":14,"hires":13,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"worklife.io"},{"company":"Neo Founders","description":"Solution pour gérer votre épargne simplement","employees2025":22,"employees2026":25,"growth":14,"hires":3,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"yomoni.fr"},{"company":"Media Immo","description":"Développement multimédias - Media Immo est spécialisé dans la génération d'états des risques et pollutions (ERP)","employees2025":50,"employees2026":57,"growth":14,"hires":7,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"media-immo.fr"},{"company":"Geodaisics","description":"L’intelligence artificielle générative","employees2025":14,"employees2026":16,"growth":14,"hires":2,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"geodaisics.com"},{"company":"Faume","description":"Votre solution de seconde main tout-en-un","employees2025":44,"employees2026":50,"growth":14,"hires":6,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"faume.co"},{"company":"Dioxycle","description":"Repenser les émissions et remplacer les énergies fossiles","employees2025":35,"employees2026":40,"growth":14,"hires":5,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Île-de-France","website":"dioxycle.com"},{"company":"Cba Informatique Libérale","description":"CBA informatique libérale : l'abécédaire du digital pour les métiers de la santé en libéral","employees2025":218,"employees2026":249,"growth":14,"hires":31,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Provence-Alpes-Côte d’Azur","website":"cbainfo.fr"},{"company":"Najar","description":"Transformer les achats IT en avantage stratégique grâce à l’IA, aux données et à l’expertise","employees2025":79,"employees2026":90,"growth":14,"hires":11,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"Najar.ai"},{"company":"Kombo","description":"Comparez les billets de train SNCF, les avions et 200 compagnies de bus","employees2025":36,"employees2026":41,"growth":14,"hires":5,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"kombo.co"},{"company":"Sweep","description":"Logiciel aidant les entreprises à suivre et agir sur leurs émissions ESG et carbone","employees2025":88,"employees2026":100,"growth":14,"hires":12,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"sweep.net"},{"company":"Planisware","description":"éditeur de logiciel de PPM","employees2025":748,"employees2026":850,"growth":14,"hires":102,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"planisware.com"},{"company":"Hublo","description":"Pressing à domicile | votre pressing éco-responsable livré à Paris - Hublo","employees2025":344,"employees2026":390,"growth":13,"hires":46,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"hublo.eu"},{"company":"Cognyx","description":"Construire du hardware à la vitesse du software.","employees2025":15,"employees2026":17,"growth":13,"hires":2,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"cognyx.io"},{"company":"Web Geo Services","description":"Google Maps - web geo services - votre partenaire cartes UK n°1","employees2025":32,"employees2026":36,"growth":13,"hires":4,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"webgeoservices.com"},{"company":"Ubikap","description":"Outil indispensable en droit des sociétés : la plateforme Ubikap","employees2025":15,"employees2026":17,"growth":13,"hires":2,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"ubikap.com"},{"company":"Opopop","description":"Colis réemployables pour des livraisons zéro déchet","employees2025":15,"employees2026":17,"growth":13,"hires":2,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"opopop.co"},{"company":"3D Prod","description":"Impression 3D en ligne, prototypage rapide","employees2025":15,"employees2026":17,"growth":13,"hires":2,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Grand Est","website":"3dprod.com"},{"company":"Revcoo","description":"Rejoignez le mouvement du refroidissement","employees2025":16,"employees2026":18,"growth":13,"hires":2,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"revcoo.com"},{"company":"Limatech","description":"Batteries lithium pour l’aéronautique et la défense","employees2025":40,"employees2026":45,"growth":13,"hires":5,"sector":"Industry & Supply (Hardware, IoT, Robotics, AR/VR, SpaceTech, Defence, Supply Chain, Mobility & Smart City, AgriTech, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"limatech.group"},{"company":"Oxeva Sas","description":"Oxeva propose des solutions d'hébergement infogéré en cloud","employees2025":15,"employees2026":17,"growth":13,"hires":2,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"oxeva.fr"},{"company":"Outsight","description":"Notre plateforme logicielle d’IA spatiale délivre des insights uniques pour optimiser les opérations, améliorer l’expérience visiteurs et renforcer la sécurité","employees2025":100,"employees2026":113,"growth":13,"hires":13,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"outsight.tech"},{"company":"Choosemycompany","description":"Avis certifiés","employees2025":79,"employees2026":89,"growth":13,"hires":10,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"capgemini-consulting.com"},{"company":"Aitenders","description":"Nous transformons des documents contractuels complexes d’appels d’offres et de projets en intelligence","employees2025":24,"employees2026":27,"growth":13,"hires":3,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Auvergne-Rhône-Alpes","website":"aitenders.com"},{"company":"Adacore","description":"Outils pour le développement à haute intégrité en Ada/Spark, C/C++ et Rust","employees2025":142,"employees2026":161,"growth":13,"hires":19,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"adacore.com"},{"company":"Happydemics","description":"Le moteur de croissance des résultats de marque","employees2025":68,"employees2026":77,"growth":13,"hires":9,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"happydemics.com"},{"company":"Antvoice","description":"IA programmatique qui combine cookie tiers et cookieless","employees2025":16,"employees2026":18,"growth":13,"hires":2,"sector":"MarTech (Ad-Tech, Marketing Automation, CRM, DMP & Analytics, SEO, ...)","headquarters":"Île-de-France","website":"antvoice.com"},{"company":"Empowill","description":"Logiciel RH spécialiste du parcours collaborateur","employees2025":31,"employees2026":35,"growth":13,"hires":4,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"empowill.com"},{"company":"Kiosk","description":"La plateforme culturelle des entreprises et des salariés","employees2025":15,"employees2026":17,"growth":13,"hires":2,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"meetkiosk.com"},{"company":"Manty","description":"Solutions intelligentes pour les administrations de demain","employees2025":52,"employees2026":58,"growth":12,"hires":6,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"manty.eu"},{"company":"Beeldi","description":"Les incontournables de l'approche immobilière liée à la maintenance: diagnostic, réglementation, plan","employees2025":25,"employees2026":28,"growth":12,"hires":3,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"beeldi.com"},{"company":"Madbox","description":"Gaming","employees2025":126,"employees2026":141,"growth":12,"hires":15,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Île-de-France","website":"madboxgames.io"},{"company":"Scalizer","description":"Tirez le meilleur de vos systèmes CRM et ERP","employees2025":27,"employees2026":30,"growth":12,"hires":3,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Pays de la Loire","website":"scalizer.fr"},{"company":"Moka.Care","description":"L’allié santé mentale de votre organisation","employees2025":55,"employees2026":62,"growth":12,"hires":7,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"moka.care"},{"company":"Lakaa","description":"Le dispositif de référence des entreprises multi-sites pour vos actions à impact.","employees2025":26,"employees2026":29,"growth":12,"hires":3,"sector":"Impact (GreenTech, Decarbonation, Energy, Non profit, ...)","headquarters":"Île-de-France","website":"lakaa.io"},{"company":"Qwarry","description":"La seule plateforme d'IA omnicanale","employees2025":41,"employees2026":46,"growth":12,"hires":5,"sector":"MarTech (Ad-Tech, Marketing Automation, CRM, DMP & Analytics, SEO, ...)","headquarters":"Île-de-France","website":"qwarry.com"},{"company":"Charles.co","description":"Solutions complètes, efficaces et personnalisées pour votre santé au quotidien.","employees2025":17,"employees2026":19,"growth":12,"hires":2,"sector":"HealthTech (Health Services, MedTech, Pharma, BioTech, Mental Health, ...)","headquarters":"Île-de-France","website":"Charles.co"},{"company":"Winamax","description":"Paris sportifs. Poker en ligne.","employees2025":379,"employees2026":425,"growth":12,"hires":46,"sector":"Entertainment (Telecom, Media, Sport, Gaming / Bet, Social Network, ...)","headquarters":"Île-de-France","website":"winamax.fr"},{"company":"Money Walkie","description":"Le moyen de paiement préféré des enfants et des ados","employees2025":34,"employees2026":38,"growth":12,"hires":4,"sector":"FinTech (Payment, InsurTech, Crowdfunding, WealthTech, Proptech, Web3, ...)","headquarters":"Île-de-France","website":"moneywalkie.com"},{"company":"Tilt Energy","description":"Révélez tout le potentiel de la flexibilité électrique","employees2025":17,"employees2026":19,"growth":12,"hires":2,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"tilt-energy.com"},{"company":"Adagio","description":"Adtech pour optimiser la demande pour les annoncerus","employees2025":74,"employees2026":83,"growth":12,"hires":9,"sector":"MarTech (Ad-Tech, Marketing Automation, CRM, DMP & Analytics, SEO, ...)","headquarters":"Occitanie","website":"adagio.io"},{"company":"Hexa","description":"Startup studio.","employees2025":27,"employees2026":30,"growth":11,"hires":3,"sector":"BtoB Tools (LegalTech, EdTech, HRTech, Collaborative Tools, CRM, ERP, ...)","headquarters":"Île-de-France","website":"hexa.com"},{"company":"Onepilot","description":"Redéfinir l’externalisation de l’expérience client","employees2025":87,"employees2026":97,"growth":11,"hires":10,"sector":"Distribution & BtoC (RetailTech, e-commerce, Marketplace, Foodtech, Luxury, TravelTech, ...)","headquarters":"Île-de-France","website":"onepilot.co"}];
+    const MAX_GROWTH = 237;
+
+    var state = {
+        sort: 'growth',
+        dir: 'desc',
+        search: '',
+        sector: '',
+        region: '',
+        page: 1,
+        perPage: 50,
+        filtered: []
+    };
+
+    var sectorMap = {
+        'BtoB Tools': { cls: 'sector-btob', dot: 'dot-btob' },
+        'DeepTech': { cls: 'sector-deeptech', dot: 'dot-deeptech' },
+        'Distribution & BtoC': { cls: 'sector-distribution', dot: 'dot-distribution' },
+        'Entertainment': { cls: 'sector-entertainment', dot: 'dot-entertainment' },
+        'FinTech': { cls: 'sector-fintech', dot: 'dot-fintech' },
+        'HealthTech': { cls: 'sector-healthtech', dot: 'dot-healthtech' },
+        'Impact': { cls: 'sector-impact', dot: 'dot-impact' },
+        'Industry & Supply': { cls: 'sector-industry', dot: 'dot-industry' },
+        'MarTech': { cls: 'sector-martech', dot: 'dot-martech' }
+    };
+
+    function getShortSector(full) {
+        return full.split('(')[0].trim();
+    }
+
+    function getSectorInfo(full) {
+        var short = getShortSector(full);
+        return sectorMap[short] || { cls: 'sector-btob', dot: 'dot-btob' };
+    }
+
+    function growthClass(g) {
+        if (g >= 80) return 'growth-high';
+        if (g >= 40) return 'growth-med';
+        return 'growth-low';
+    }
+
+    function formatNum(n) {
+        return n.toLocaleString('en-US');
+    }
+
+    function escapeHtml(str) {
+        var d = document.createElement('div');
+        d.textContent = str;
+        return d.innerHTML;
+    }
+
+    function applyFilters() {
+        state.sector = document.getElementById('sectorFilter').value;
+        state.region = document.getElementById('regionFilter').value;
+        state.search = document.getElementById('searchInput').value.trim().toLowerCase();
+        state.page = 1;
+
+        document.getElementById('clearBtn').classList.toggle('visible', state.search.length > 0);
+
+        var filtered = DATA.slice();
+
+        if (state.search) {
+            var q = state.search;
+            filtered = filtered.filter(function(d) {
+                return d.company.toLowerCase().indexOf(q) !== -1 ||
+                       d.description.toLowerCase().indexOf(q) !== -1 ||
+                       d.website.toLowerCase().indexOf(q) !== -1;
+            });
+        }
+
+        if (state.sector) {
+            var sec = state.sector;
+            filtered = filtered.filter(function(d) {
+                return getShortSector(d.sector) === sec;
+            });
+        }
+
+        if (state.region) {
+            var reg = state.region;
+            filtered = filtered.filter(function(d) {
+                return d.headquarters === reg;
+            });
+        }
+
+        var sortField = state.sort;
+        var sortDir = state.dir;
+        filtered.sort(function(a, b) {
+            var va = a[sortField], vb = b[sortField];
+            if (typeof va === 'string') { va = va.toLowerCase(); vb = vb.toLowerCase(); }
+            if (va < vb) return sortDir === 'asc' ? -1 : 1;
+            if (va > vb) return sortDir === 'asc' ? 1 : -1;
+            return 0;
+        });
+
+        state.filtered = filtered;
+        render();
+    }
+
+    function setSort(field, dir) {
+        if (dir) {
+            state.sort = field;
+            state.dir = dir;
+        } else {
+            if (state.sort === field) {
+                state.dir = state.dir === 'desc' ? 'asc' : 'desc';
+            } else {
+                state.sort = field;
+                state.dir = field === 'company' ? 'asc' : 'desc';
+            }
+        }
+        state.page = 1;
+
+        // Update sort button states
+        var btns = document.querySelectorAll('.sort-btn');
+        for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+        var activeId = 'sort-' + field + '-' + state.dir;
+        var activeBtn = document.getElementById(activeId);
+        if (activeBtn) activeBtn.classList.add('active');
+
+        // Update table header states
+        var ths = document.querySelectorAll('thead th.sorted');
+        for (var j = 0; j < ths.length; j++) ths[j].classList.remove('sorted');
+        var thEl = document.getElementById('th-' + field);
+        if (thEl) thEl.classList.add('sorted');
+
+        applyFilters();
+    }
+
+    function setPage(p) {
+        state.page = p;
+        render();
+        window.scrollTo({ top: document.querySelector('.table-wrapper').offsetTop - 80, behavior: 'smooth' });
+    }
+
+    function clearSearch() {
+        document.getElementById('searchInput').value = '';
+        applyFilters();
+    }
+
+    function render() {
+        var filtered = state.filtered;
+        var page = state.page;
+        var perPage = state.perPage;
+        var totalPages = Math.ceil(filtered.length / perPage);
+        var start = (page - 1) * perPage;
+        var pageData = filtered.slice(start, start + perPage);
+
+        var tbody = document.getElementById('tableBody');
+        if (pageData.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="8"><div class="empty-state"><div class="empty-icon"><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg></div><div class="empty-title">No results found</div><div class="empty-text">Try adjusting your search or filters</div></div></td></tr>';
+        } else {
+            var html = '';
+            for (var i = 0; i < pageData.length; i++) {
+                var d = pageData[i];
+                var rank = start + i + 1;
+                var si = getSectorInfo(d.sector);
+                var shortSector = getShortSector(d.sector);
+                var barWidth = Math.round((d.growth / MAX_GROWTH) * 100);
+                var url = d.website.indexOf('http') === 0 ? d.website : 'https://' + d.website;
+                html += '<tr>' +
+                    '<td class="col-rank">' + rank + '</td>' +
+                    '<td class="col-company"><a class="company-link" href="' + escapeHtml(url) + '" target="_blank" rel="noopener"><span class="company-name">' + escapeHtml(d.company) + '</span></a><span class="company-desc" title="' + escapeHtml(d.description) + '">' + escapeHtml(d.description) + '</span></td>' +
+                    '<td class="col-sector"><span class="sector-badge ' + si.cls + '"><span class="sector-dot ' + si.dot + '"></span>' + escapeHtml(shortSector) + '</span></td>' +
+                    '<td class="col-hq">' + escapeHtml(d.headquarters) + '</td>' +
+                    '<td class="col-employees"><span class="emp-current">' + formatNum(d.employees2026) + '</span> <span class="emp-prev">(' + formatNum(d.employees2025) + ')</span></td>' +
+                    '<td class="col-growth"><div class="growth-value ' + growthClass(d.growth) + '">' + d.growth + '%</div><div class="growth-bar"><div class="growth-bar-fill" style="width:' + barWidth + '%"></div></div></td>' +
+                    '<td class="col-hires"><span class="hires-value">+' + formatNum(d.hires) + '</span></td>' +
+                    '<td class="col-website"><a class="website-link" href="' + escapeHtml(url) + '" target="_blank" rel="noopener" title="' + escapeHtml(d.website) + '"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg></a></td>' +
+                    '</tr>';
+            }
+            tbody.innerHTML = html;
+        }
+
+        // Results info
+        var ri = document.getElementById('resultsInfo');
+        if (state.search || state.sector || state.region) {
+            var parts = [];
+            if (state.search) parts.push('matching "<span class="hl">' + escapeHtml(state.search) + '</span>"');
+            if (state.sector) parts.push('in <span class="hl">' + escapeHtml(state.sector) + '</span>');
+            if (state.region) parts.push('based in <span class="hl">' + escapeHtml(state.region) + '</span>');
+            ri.innerHTML = 'Showing <strong>' + filtered.length + '</strong> companies ' + parts.join(' ');
+        } else {
+            var sortName = state.sort === 'growth' ? 'growth %' : state.sort === 'hires' ? 'hires' : state.sort === 'company' ? 'name' : state.sort === 'employees2026' ? 'team size' : state.sort;
+            var dirName = state.dir === 'desc' ? 'highest first' : 'lowest first';
+            ri.innerHTML = 'Showing all <strong>' + filtered.length + '</strong> companies, sorted by <span class="hl">' + sortName + '</span> (' + dirName + ')';
+        }
+
+        // Pagination
+        var pag = document.getElementById('pagination');
+        if (totalPages <= 1) { pag.innerHTML = ''; return; }
+
+        var ph = '<button class="page-btn" onclick="setPage(' + (page - 1) + ')" ' + (page === 1 ? 'disabled' : '') + '>&larr; Prev</button>';
+        var maxShow = 7;
+        var startP = Math.max(1, page - 3);
+        var endP = Math.min(totalPages, startP + maxShow - 1);
+        if (endP - startP < maxShow - 1) startP = Math.max(1, endP - maxShow + 1);
+
+        if (startP > 1) {
+            ph += '<button class="page-btn" onclick="setPage(1)">1</button>';
+            if (startP > 2) ph += '<span class="page-info">&hellip;</span>';
+        }
+        for (var k = startP; k <= endP; k++) {
+            ph += '<button class="page-btn' + (k === page ? ' active' : '') + '" onclick="setPage(' + k + ')">' + k + '</button>';
+        }
+        if (endP < totalPages) {
+            if (endP < totalPages - 1) ph += '<span class="page-info">&hellip;</span>';
+            ph += '<button class="page-btn" onclick="setPage(' + totalPages + ')">' + totalPages + '</button>';
+        }
+        ph += '<button class="page-btn" onclick="setPage(' + (page + 1) + ')" ' + (page === totalPages ? 'disabled' : '') + '>Next &rarr;</button>';
+
+        ph += '<select class="per-page-select" onchange="state.perPage=+this.value;state.page=1;applyFilters()">';
+        var sizes = [25, 50, 100, 500];
+        for (var m = 0; m < sizes.length; m++) {
+            ph += '<option value="' + sizes[m] + '"' + (state.perPage === sizes[m] ? ' selected' : '') + '>' + sizes[m] + ' / page</option>';
+        }
+        ph += '</select>';
+        pag.innerHTML = ph;
+    }
+
+    function buildSectorPills() {
+        var counts = {};
+        for (var i = 0; i < DATA.length; i++) {
+            var s = getShortSector(DATA[i].sector);
+            counts[s] = (counts[s] || 0) + 1;
+        }
+        var pills = document.getElementById('sectorPills');
+        var names = Object.keys(counts).sort();
+        var html = '<button class="sector-pill active" onclick="filterSector(this, \'\')" data-sector="">All (' + DATA.length + ')</button>';
+        for (var j = 0; j < names.length; j++) {
+            var name = names[j];
+            var si = getSectorInfo(name + ' (');
+            html += '<button class="sector-pill" onclick="filterSector(this, \'' + name.replace(/'/g, "\\'") + '\')" data-sector="' + name + '"><span class="sector-dot ' + si.dot + '"></span>' + name + ' (' + counts[name] + ')</button>';
+        }
+        pills.innerHTML = html;
+    }
+
+    function filterSector(el, sector) {
+        var pills = document.querySelectorAll('.sector-pill');
+        for (var i = 0; i < pills.length; i++) pills[i].classList.remove('active');
+        el.classList.add('active');
+        document.getElementById('sectorFilter').value = sector;
+        applyFilters();
+    }
+
+    // Debounced search
+    var searchTimer = null;
+    document.getElementById('searchInput').addEventListener('input', function() {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(applyFilters, 150);
+    });
+
+    // Scroll to top button
+    window.addEventListener('scroll', function() {
+        document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 400);
+    });
+
+    // Init
+    buildSectorPills();
+    applyFilters();
+    </script>
+</body>
+</html>
